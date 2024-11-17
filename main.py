@@ -136,7 +136,7 @@ def main():
                     with gr.Row():
                         status = gr.Markdown(f"Tip: 按Enter提交, 按Shift+Enter换行。支持将文件直接粘贴到输入区。（免费支持gpt-4o-mini、gemini-1.5-flash-latest、claude-3-haiku-20240307）<p><br>切换高级模型：输入区输入AIO平台<a href='https://api.aiearth.dev' target='_blank'>api.aiearth.dev</a>API令牌更换模型；教程：<a href='https://pl6pt5c18e.feishu.cn/docx/G1fEdSZDMoMnTCx5XUOcRmeonOu' target='_blank'>全流程图解❤新手上手指南🚀</a></p>", elem_id="state-panel")
 
-                with gr.Accordion("手动配置",open=False,elem_id="input-pannel") as area_input_token:
+                with gr.Accordion("自定义API配置(如：https://api.aiearth.dev/v1/chat/completions)",open=False,elem_id="input-pannel") as area_input_token:
                     with gr.Row():
                         api_server_txt = gr.Textbox(show_label=False, placeholder="在这里输入自定义API(如：https://api.aiearth.dev/v1/chat/completions)",elem_id='api_server_input_main').style(container=False)
                     with gr.Row():
