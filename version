@@ -1,0 +1,5 @@
+{
+  "version": 3.90,
+  "show_feature": true,
+  "new_feature": "增加RAG组件 <-> 升级多合一主提交键"
+}
