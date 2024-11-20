@@ -113,7 +113,7 @@ def main():
             with gr_L2(scale=1, elem_id="gpt-panel"):
                 with gr.Accordion("输入区", open=True, elem_id="input-panel") as area_input_primary:
                     with gr.Row():
-                        txt = gr.Textbox(show_label=False, placeholder="在这里输入交互式命令或问题", elem_id='user_input_main', rows=3).style(container=False,height="200px")
+                        txt = gr.Textbox(show_label=False, placeholder="在这里输入交互式命令或问题", elem_id='user_input_main').style(container=False)
                     with gr.Row(elem_id="gpt-submit-row"):
                         multiplex_submit_btn = gr.Button("提交", elem_id="elem_submit_visible", variant="primary")
                         multiplex_sel = gr.Dropdown(

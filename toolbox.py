@@ -102,24 +102,25 @@ def ArgsGeneralWrapper(f):
             user_name = default_user_name
         embed_model = get_conf("EMBEDDING_MODEL")
         if api_key is not None and api_key!='':
-            cookies['api_key'] = api_key
+            cookies['user_api_key'] = api_key
         else:
-            cookies['api_key'] = None
+            cookies['user_api_key'] = None
         if api_server is not None and api_server!='':
-            cookies['api_server'] = api_server
+            cookies['user_api_server'] = api_server
         else:
-            cookies['api_server'] = None
+            cookies['user_api_server'] = None
         cookies.update({
             'top_p': top_p,
             'api_key': cookies['api_key'],
+            'user_api_key': cookies['user_api_key'],
             'llm_model': llm_model,
             'embed_model': embed_model,
             'temperature': temperature,
             'user_name': user_name,
-            'api_server':cookies['api_server']
+            'user_api_server':cookies['user_api_server']
         })
         llm_kwargs = {
-            'api_key': cookies['api_key'],
+            'api_key': cookies['user_api_server'] if cookies['user_api_server'] is not None else cookies['api_key'],
             'llm_model': llm_model,
             'embed_model': embed_model,
             'top_p': top_p,
@@ -127,7 +128,7 @@ def ArgsGeneralWrapper(f):
             'temperature': temperature,
             'client_ip': request.client.host,
             'most_recent_uploaded': cookies.get('most_recent_uploaded'),
-            'api_server': cookies['api_server']
+            'api_server': cookies['user_api_server'] if cookies['user_api_server'] is not None else None,
         }
         if isinstance(plugin_advanced_arg, str):
             plugin_kwargs = {"advanced_arg": plugin_advanced_arg}

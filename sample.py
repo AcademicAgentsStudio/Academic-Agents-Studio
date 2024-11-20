@@ -1,5 +1,18 @@
 import gradio as gr
+import sys
 
+from toolbox import is_any_api_key, load_chat_cookies
+
+cookies = load_chat_cookies()
+print(is_any_api_key("sk-LBq3ru0nc6dSr1Jh79C83228A1544186Ad0a2bC4CaA2929c"))
+print(cookies)
+
+
+
+
+
+
+sys.exit(0)
 # 定义一个简单的函数
 def greet(name):
     return f"Hello, {name}!"
