@@ -486,3 +486,86 @@ https://github.com/oobabooga/one-click-installers
 https://github.com/gradio-app/gradio
 https://github.com/fghrsh/live2d_demo
 ```
+
+---
+
+## 🌟 加入我们的社区
+
+欢迎加入 **Academic Agents Platform** 学术智能体社区！在这里您可以：
+
+- 💬 **交流使用心得**：分享使用技巧，获取最佳实践
+- 🐛 **反馈问题**：报告Bug，提出改进建议
+- 🎯 **功能讨论**：参与新功能设计，提出需求建议
+- 📚 **学术交流**：与其他学者交流研究心得
+- 🚀 **抢先体验**：第一时间体验新功能和版本更新
+
+
+
+### 📱 扫码加入群聊
+
+<div align="center">
+<table>
+<tr>
+<td align="center">
+<img src="./docs/QQ_group.png" width="200" alt="QQ群二维码"/><br>
+<strong>🐧 QQ交流群</strong><br>
+<em>学术AI助手交流群</em>
+</td>
+<td align="center">
+<img src="./docs/Wechat_group.png" width="200" alt="微信群二维码"/><br>
+<strong>💬 微信交流群</strong><br>
+<em>Academic Agents 群</em>
+</td>
+</tr>
+</table>
+
+</div>
+
+> [!TIP]
+> **群聊福利**：
+> - 🎁 新用户专享配置指南
+> - 📖 独家使用教程和模板
+> - 🔥 最新功能抢先测试
+> - 💡 一对一技术支持
+> - 📊 学术资源分享
+
+### 💌 其他联系方式
+
+- 📧 **邮箱**：academicagents@aioagi.tech
+- 🐙 **GitHub Issues**：[提交问题和建议](https://github.com/AIOAGI/AcademicAgentsPlatform/issues)
+- 📝 **文档中心**：[在线文档](https://docs.academicagents.org)
+
+---
+
+## 🙏 致谢与参考
+
+感谢以下优秀开源项目的贡献，本项目在开发过程中参考和借鉴了它们的设计理念：
+
+### 核心基础
+- [GPT Academic](https://github.com/binary-husky/gpt_academic) - 本项目的主要基础框架
+
+### 技术组件
+- [Gradio](https://github.com/gradio-app/gradio) - Web界面框架
+- [ChatGLM2-6B](https://github.com/THUDM/ChatGLM2-6B) - 清华大学开源语言模型
+- [JittorLLMs](https://github.com/Jittor/JittorLLMs) - 清华大学JittorLLMs框架
+- [Live2D Demo](https://github.com/fghrsh/live2d_demo) - Live2D集成方案
+
+### 学术工具
+- [ChatPaper](https://github.com/kaixindelele/ChatPaper) - 论文处理工具
+- [Edge-GPT](https://github.com/acheong08/EdgeGPT) - GPT接口优化
+- [ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT) - 界面设计参考
+
+### 部署工具
+- [Oobabooga one-click installer](https://github.com/oobabooga/one-click-installers) - 一键安装方案
+
+---
+
+<div align="center">
+
+**🎯 让AI成为您学术研究的得力助手！**
+
+如果这个项目对您有帮助，请给我们一个 ⭐ Star！
+
+[⬆️ 回到顶部](#academic-agents-platform)
+
+</div>
