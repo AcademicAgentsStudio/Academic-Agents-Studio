@@ -1,3 +1,11 @@
+<p align="right">
+   <strong>中文</strong> | <a href="./README.en.md">English</a>
+</p>
+<div align="center">
+
+![AcademicAgentsPlatform](./docs/logo.png){:height="10px" width="10px"}
+
+
 > [!NOTE]
 > 本项目为开源项目，在中科院学术版GPT：[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上研发的新一代学术智能体平台
 
