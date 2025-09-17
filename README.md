@@ -1,5 +1,5 @@
 > [!NOTE]
-> 本项目为开源项目，在[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上进行二次开发
+> 本项目为开源项目，在中科院学术GPT[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上研发的新一代学术智能体平台
 
 > [!IMPORTANT]
 > 2024.10.10: 突发停电，紧急恢复了提供[whl包](https://drive.google.com/file/d/19U_hsLoMrjOlQSzYS3pzWX9fTzyusArP/view?usp=sharing)的文件服务器  
