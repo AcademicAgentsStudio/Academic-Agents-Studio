@@ -509,12 +509,12 @@ https://github.com/fghrsh/live2d_demo
 <td align="center">
 <img src="./docs/QQ_group.png" width="200" alt="QQ群二维码"/><br>
 <strong>🐧 QQ交流群</strong><br>
-<em>学术AI助手交流群</em>
+<em>Academic Agents学术智能体交流群</em>
 </td>
 <td align="center">
 <img src="./docs/Wechat_group.png" width="200" alt="微信群二维码"/><br>
 <strong>💬 微信交流群</strong><br>
-<em>Academic Agents 群</em>
+<em>Academic Agents学术智能体交流群</em>
 </td>
 </tr>
 </table>
