@@ -3,26 +3,12 @@
 </p>
 <div align="center">
 
-![AcademicAgentsPlatform](./docs/logo.png){:height="10px" width="10px"}
+<img src=./docs/logo.png width=100 />
 
+# Academic Agents Platform
 
-> [!NOTE]
-> 本项目为开源项目，在中科院学术版GPT：[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上研发的新一代学术智能体平台
+### 🤖学术通用智能体应用服务平台
 
-> [!IMPORTANT]
-> 2024.10.10: 突发停电，紧急恢复了提供[whl包](https://drive.google.com/file/d/19U_hsLoMrjOlQSzYS3pzWX9fTzyusArP/view?usp=sharing)的文件服务器  
-> 2024.10.8: 版本3.90加入对llama-index的初步支持，版本3.80加入插件二级菜单功能（详见wiki）  
-> 2024.5.1: 加入Doc2x翻译PDF论文的功能，[查看详情](https://github.com/binary-husky/gpt_academic/wiki/Doc2x)  
-> 2024.3.11: 全力支持Qwen、GLM、DeepseekCoder等中文大语言模型！ SoVits语音克隆模块，[查看详情](https://www.bilibili.com/video/BV1Rp421S7tF/) 
-> 2024.1.17: 安装依赖时，请选择`requirements.txt`中**指定的版本**。 安装命令：`pip install -r requirements.txt`。本项目完全开源免费，您可通过订阅[在线服务](https://github.com/binary-husky/gpt_academic/wiki/online)的方式鼓励本项目的发展。
-
-<br>
-
-<div align=center>
-<h1 aligh="center">
-<img src="docs/logo.png" width="40">Academic Agents Platform
-    <br>学术通用智能体应用服务平台
-</h1>
 
 [![Github][Github-image]][Github-url]
 [![License][License-image]][License-url]
@@ -32,22 +18,26 @@
 [![PR][PRs-image]][PRs-url]
 
 [Github-image]: https://img.shields.io/badge/github-12100E.svg?style=flat-square
-[License-image]: https://img.shields.io/github/license/binary-husky/gpt_academic?label=License&style=flat-square&color=orange
-[Releases-image]: https://img.shields.io/github/release/binary-husky/gpt_academic?label=Release&style=flat-square&color=blue
-[Installation-image]: https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/binary-husky/gpt_academic/master/version&query=$.version&label=Installation&style=flat-square
+[License-image]: https://img.shields.io/github/license/AIOAGI/AcademicAgentsPlatform?label=License&style=flat-square&color=orange
+[Releases-image]: https://img.shields.io/github/release/AIOAGI/AcademicAgentsPlatform?label=Release&style=flat-square&color=blue
+[Installation-image]: https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/AIOAGI/AcademicAgentsPlatform/master/version&query=$.version&label=Installation&style=flat-square
 [Wiki-image]: https://img.shields.io/badge/wiki-项目文档-black?style=flat-square
 [PRs-image]: https://img.shields.io/badge/PRs-welcome-pink?style=flat-square
 
-[Github-url]: https://github.com/binary-husky/gpt_academic
-[License-url]: https://github.com/binary-husky/gpt_academic/blob/master/LICENSE
-[Releases-url]: https://github.com/binary-husky/gpt_academic/releases
-[Installation-url]: https://github.com/binary-husky/gpt_academic#installation
-[Wiki-url]: https://github.com/binary-husky/gpt_academic/wiki
-[PRs-url]: https://github.com/binary-husky/gpt_academic/pulls
+[Github-url]: https://github.com/AIOAGI/AcademicAgentsPlatform
+[License-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/blob/master/LICENSE
+[Releases-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/releases
+[Installation-url]: https://github.com/AIOAGI/AcademicAgentsPlatform#installation
+[Wiki-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/wiki
+[PRs-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/pulls
 
 
 </div>
+
+> [!NOTE]
+> 本项目为开源项目，在中科院学术版GPT：[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上研发的新一代学术智能体平台
 <br>
+
 
 **如果喜欢这个项目，请给它一个Star；如果您发明了好用的快捷键或插件，欢迎发pull requests！**
 
