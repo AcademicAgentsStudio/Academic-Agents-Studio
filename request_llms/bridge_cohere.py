@@ -68,7 +68,7 @@ def verify_endpoint(endpoint):
         raise ValueError("Endpoint不正确, 请检查AZURE_ENDPOINT的配置! 当前的Endpoint为:" + endpoint)
     return endpoint
 
-def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], sys_prompt:str="", observe_window:list=None, console_slience:bool=False):
+def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], sys_prompt:str="", observe_window:list=None, console_silence:bool=False):
     """
     发送，等待回复，一次性完成，不显示中间过程。但内部用stream的方法避免中途网线被掐。
     inputs：
@@ -90,7 +90,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
             # make a POST request to the API endpoint, stream=False
             from .bridge_all import model_info
             endpoint = verify_endpoint(model_info[llm_kwargs['llm_model']]['endpoint'])
-            response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint, headers=headers, proxies=proxies,
+            response = requests.post(endpoint, headers=headers, proxies=proxies,
                                     json=payload, stream=True, timeout=TIMEOUT_SECONDS); break
         except requests.exceptions.ReadTimeout as e:
             retry += 1
@@ -111,7 +111,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
         if chunkjson['event_type'] == 'stream-start': continue
         if chunkjson['event_type'] == 'text-generation':
             result += chunkjson["text"]
-            if not console_slience: print(chunkjson["text"], end='')
+            if not console_silence: print(chunkjson["text"], end='')
             if observe_window is not None:
                 # 观测窗，把已经获取的数据显示出去
                 if len(observe_window) >= 1:
@@ -132,7 +132,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     inputs 是本次问询的输入
     top_p, temperature是chatGPT的内部调优参数
     history 是之前的对话列表（注意无论是inputs还是history，内容太长了都会触发token数量溢出的错误）
-    chatbot 为WebUI中显示的对话列表，修改它，然后yeild出去，可以直接修改对话界面内容
+    chatbot 为WebUI中显示的对话列表，修改它，然后yield出去，可以直接修改对话界面内容
     additional_fn代表点击的哪个按钮，按钮见functional.py
     """
     # if is_any_api_key(inputs):
@@ -184,7 +184,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     while True:
         try:
             # make a POST request to the API endpoint, stream=True
-            response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint, headers=headers, proxies=proxies,
+            response = requests.post(endpoint, headers=headers, proxies=proxies,
                                     json=payload, stream=True, timeout=TIMEOUT_SECONDS);break
         except:
             retry += 1

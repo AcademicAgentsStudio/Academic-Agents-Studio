@@ -38,7 +38,7 @@ class TaichuChatInit:
         }
 
         api = 'https://ai-maas.wair.ac.cn/maas/v1/model_api/invoke'
-        response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else api, json=params, stream=True)
+        response = requests.post(api, json=params, stream=True)
         results = ""
         if response.status_code == 200:
             response.encoding = 'utf-8'

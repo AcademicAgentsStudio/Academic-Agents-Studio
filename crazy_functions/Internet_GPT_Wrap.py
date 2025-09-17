@@ -1,4 +1,4 @@
-
+import random
 from toolbox import get_conf
 from crazy_functions.Internet_GPT import 连接网络回答问题
 from crazy_functions.plugin_template.plugin_class_template import GptAcademicPluginTemplate, ArgProperty
@@ -20,6 +20,9 @@ class NetworkGPT_Wrap(GptAcademicPluginTemplate):
         第三个参数，名称`allow_cache`，参数`type`声明这是一个下拉菜单，下拉菜单上方显示`title`+`description`，下拉菜单的选项为`options`，`default_value`为下拉菜单默认值；
 
         """
+        urls = get_conf("SEARXNG_URLS")
+        url = random.choice(urls)
+
         gui_definition = {
             "main_input":
                 ArgProperty(title="输入问题", description="待通过互联网检索的问题，会自动读取输入框内容", default_value="", type="string").model_dump_json(), # 主输入，自动从输入框同步
@@ -30,16 +33,17 @@ class NetworkGPT_Wrap(GptAcademicPluginTemplate):
             "optimizer":
                 ArgProperty(title="搜索优化", options=["关闭", "开启", "开启(增强)"], default_value="关闭", description="是否使用搜索增强。注意这可能会消耗较多token", type="dropdown").model_dump_json(),
             "searxng_url":
-                ArgProperty(title="Searxng服务地址", description="输入Searxng的地址", default_value=get_conf("SEARXNG_URL"), type="string").model_dump_json(), # 主输入，自动从输入框同步
+                ArgProperty(title="Searxng服务地址", description="输入Searxng的地址", default_value=url, type="string").model_dump_json(), # 主输入，自动从输入框同步
 
         }
         return gui_definition
 
-    def execute(txt, llm_kwargs, plugin_kwargs, chatbot, history, system_prompt, user_request):
+    def execute(txt, llm_kwargs, plugin_kwargs:dict, chatbot, history, system_prompt, user_request):
         """
         执行插件
         """
-        if plugin_kwargs["categories"] == "网页": plugin_kwargs["categories"] = "general"
-        if plugin_kwargs["categories"] == "学术论文": plugin_kwargs["categories"] = "science"
+        if plugin_kwargs.get("categories", None) == "网页": plugin_kwargs["categories"] = "general"
+        elif plugin_kwargs.get("categories", None) == "学术论文": plugin_kwargs["categories"] = "science"
+        else: plugin_kwargs["categories"] = "general"
         yield from 连接网络回答问题(txt, llm_kwargs, plugin_kwargs, chatbot, history, system_prompt, user_request)
 

@@ -1,4 +1,4 @@
-https://public.agent-matrix.com/publish/gradio-3.32.10-py3-none-any.whl
+https://public.agent-matrix.com/publish/gradio-3.32.15-py3-none-any.whl
 fastapi==0.110
 gradio-client==0.8
 pypdf2==2.12.1
@@ -13,7 +13,7 @@ scipdf_parser>=0.52
 spacy==3.7.4
 anthropic>=0.18.1
 python-markdown-math
-pymdown-extensions
+pymdown-extensions>=10.14
 websocket-client
 beautifulsoup4
 prompt_toolkit
@@ -21,11 +21,11 @@ latex2mathml
 python-docx
 mdtex2html
 dashscope
-pyautogen
 colorama
+docx2pdf
 Markdown
 pygments
-edge-tts
+edge-tts>=7.0.0
 pymupdf
 openai
 rjsmin

@@ -8,6 +8,7 @@ import base64
 import gradio
 import shutil
 import glob
+import json
 import uuid
 from loguru import logger
 from functools import wraps
@@ -36,6 +37,9 @@ from shared_utils.handle_upload import html_local_file
 from shared_utils.handle_upload import html_local_img
 from shared_utils.handle_upload import file_manifest_filter_type
 from shared_utils.handle_upload import extract_archive
+from shared_utils.context_clip_policy import clip_history
+from shared_utils.context_clip_policy import auto_context_clip_each_message
+from shared_utils.context_clip_policy import auto_context_clip_search_optimal
 from typing import List
 pj = os.path.join
 default_user_name = "default_user"
@@ -92,8 +96,9 @@ def ArgsGeneralWrapper(f):
     """
     def decorated(request: gradio.Request, cookies:dict, max_length:int, llm_model:str,
                   txt:str, txt2:str, top_p:float, temperature:float, chatbot:list,
-                  history:list, system_prompt:str, plugin_advanced_arg:dict, api_key:str,api_server:str, *args):
+                  json_history:str, system_prompt:str, plugin_advanced_arg:dict, *args):
         txt_passon = txt
+        history = json.loads(json_history) if json_history else []
         if txt == "" and txt2 != "": txt_passon = txt2
         # 引入一个有cookie的chatbot
         if request.username is not None:
@@ -101,34 +106,23 @@ def ArgsGeneralWrapper(f):
         else:
             user_name = default_user_name
         embed_model = get_conf("EMBEDDING_MODEL")
-        if api_key is not None and api_key!='':
-            cookies['user_api_key'] = api_key
-        else:
-            cookies['user_api_key'] = None
-        if api_server is not None and api_server!='':
-            cookies['user_api_server'] = api_server
-        else:
-            cookies['user_api_server'] = None
         cookies.update({
             'top_p': top_p,
             'api_key': cookies['api_key'],
-            'user_api_key': cookies['user_api_key'],
             'llm_model': llm_model,
             'embed_model': embed_model,
             'temperature': temperature,
             'user_name': user_name,
-            'user_api_server':cookies['user_api_server']
         })
         llm_kwargs = {
-            'api_key': cookies['user_api_server'] if cookies['user_api_server'] is not None else cookies['api_key'],
+            'api_key': cookies['api_key'],
             'llm_model': llm_model,
             'embed_model': embed_model,
             'top_p': top_p,
             'max_length': max_length,
             'temperature': temperature,
             'client_ip': request.client.host,
-            'most_recent_uploaded': cookies.get('most_recent_uploaded'),
-            'api_server': cookies['user_api_server'] if cookies['user_api_server'] is not None else None,
+            'most_recent_uploaded': cookies.get('most_recent_uploaded')
         }
         if isinstance(plugin_advanced_arg, str):
             plugin_kwargs = {"advanced_arg": plugin_advanced_arg}
@@ -142,6 +136,9 @@ def ArgsGeneralWrapper(f):
             if len(args) == 0:  # 插件通道
                 yield from f(txt_passon, llm_kwargs, plugin_kwargs, chatbot_with_cookie, history, system_prompt, request)
             else:               # 对话通道，或者基础功能通道
+                # 基础对话通道，或者基础功能通道
+                if get_conf('AUTO_CONTEXT_CLIP_ENABLE'):
+                    txt_passon, history = auto_context_clip(txt_passon, history)
                 yield from f(txt_passon, llm_kwargs, plugin_kwargs, chatbot_with_cookie, history, system_prompt, *args)
         else:
             # 处理少数情况下的特殊插件的锁定状态
@@ -159,10 +156,11 @@ def ArgsGeneralWrapper(f):
     return decorated
 
 
-def update_ui(chatbot:ChatBotWithCookies, history, msg="正常", **kwargs):  # 刷新界面
+def update_ui(chatbot:ChatBotWithCookies, history:list, msg:str="正常", **kwargs):  # 刷新界面
     """
     刷新用户界面
     """
+    assert isinstance(history, list), "history必须是一个list"
     assert isinstance(
         chatbot, ChatBotWithCookies
     ), "在传递chatbot的过程中不要将其丢弃。必要时, 可用clear将其清空, 然后用for+append循环重新赋值。"
@@ -186,10 +184,12 @@ def update_ui(chatbot:ChatBotWithCookies, history, msg="正常", **kwargs):  # �
     else:
         chatbot_gr = chatbot
 
-    yield cookies, chatbot_gr, history, msg
+    history = [str(history_item) for history_item in history] # ensure all items are string
+    json_history = json.dumps(history, ensure_ascii=False)
+    yield cookies, chatbot_gr, json_history, msg
 
 
-def update_ui_lastest_msg(lastmsg:str, chatbot:ChatBotWithCookies, history:list, delay=1, msg="正常"):  # 刷新界面
+def update_ui_latest_msg(lastmsg:str, chatbot:ChatBotWithCookies, history:list, delay:float=1, msg:str="正常"):  # 刷新界面
     """
     刷新用户界面
     """
@@ -594,7 +594,7 @@ def on_report_generated(cookies:dict, files:List[str], chatbot:ChatBotWithCookie
         file_links += (
             f'<br/><a href="file={os.path.abspath(f)}" target="_blank">{f}</a>'
         )
-    chatbot.append(["报告如何远程获取？", f"报告已经添加到右侧“文件下载区”（可能处于折叠状态），请查收。{file_links}"])
+    chatbot.append([None, f"已经添加到右侧“文件下载区”（可能处于折叠状态），请查收。您也可以点击以下链接直接下载：{file_links}"])
     return cookies, report_files, chatbot
 
 
@@ -685,7 +685,7 @@ def run_gradio_in_subpath(demo, auth, port, custom_path):
             return True
         if len(path) == 0:
             logger.info(
-                "ilegal custom path: {}\npath must not be empty\ndeploy on root url".format(
+                "illegal custom path: {}\npath must not be empty\ndeploy on root url".format(
                     path
                 )
             )
@@ -696,14 +696,14 @@ def run_gradio_in_subpath(demo, auth, port, custom_path):
                 return True
             return False
         logger.info(
-            "ilegal custom path: {}\npath should begin with '/'\ndeploy on root url".format(
+            "illegal custom path: {}\npath should begin with '/'\ndeploy on root url".format(
                 path
             )
         )
         return False
 
     if not is_path_legal(custom_path):
-        raise RuntimeError("Ilegal custom path")
+        raise RuntimeError("Illegal custom path")
     import uvicorn
     import gradio as gr
     from fastapi import FastAPI
@@ -718,66 +718,14 @@ def run_gradio_in_subpath(demo, auth, port, custom_path):
     app = gr.mount_gradio_app(app, demo, path=custom_path)
     uvicorn.run(app, host="0.0.0.0", port=port)  # , auth=auth
 
-
-def clip_history(inputs, history, tokenizer, max_token_limit):
-    """
-    reduce the length of history by clipping.
-    this function search for the longest entries to clip, little by little,
-    until the number of token of history is reduced under threshold.
-    通过裁剪来缩短历史记录的长度。
-    此函数逐渐地搜索最长的条目进行剪辑，
-    直到历史记录的标记数量降低到阈值以下。
-    """
-    import numpy as np
-    from request_llms.bridge_all import model_info
-
-    def get_token_num(txt):
-        return len(tokenizer.encode(txt, disallowed_special=()))
-
-    input_token_num = get_token_num(inputs)
-
-    if max_token_limit < 5000:
-        output_token_expect = 256  # 4k & 2k models
-    elif max_token_limit < 9000:
-        output_token_expect = 512  # 8k models
+def auto_context_clip(current, history, policy='search_optimal'):
+    if policy == 'each_message':
+        return auto_context_clip_each_message(current, history)
+    elif policy == 'search_optimal':
+        return auto_context_clip_search_optimal(current, history)
     else:
-        output_token_expect = 1024  # 16k & 32k models
+        raise RuntimeError(f"未知的自动上下文裁剪策略: {policy}。")
 
-    if input_token_num < max_token_limit * 3 / 4:
-        # 当输入部分的token占比小于限制的3/4时，裁剪时
-        # 1. 把input的余量留出来
-        max_token_limit = max_token_limit - input_token_num
-        # 2. 把输出用的余量留出来
-        max_token_limit = max_token_limit - output_token_expect
-        # 3. 如果余量太小了，直接清除历史
-        if max_token_limit < output_token_expect:
-            history = []
-            return history
-    else:
-        # 当输入部分的token占比 > 限制的3/4时，直接清除历史
-        history = []
-        return history
-
-    everything = [""]
-    everything.extend(history)
-    n_token = get_token_num("\n".join(everything))
-    everything_token = [get_token_num(e) for e in everything]
-
-    # 截断时的颗粒度
-    delta = max(everything_token) // 16
-
-    while n_token > max_token_limit:
-        where = np.argmax(everything_token)
-        encoded = tokenizer.encode(everything[where], disallowed_special=())
-        clipped_encoded = encoded[: len(encoded) - delta]
-        everything[where] = tokenizer.decode(clipped_encoded)[
-            :-1
-        ]  # -1 to remove the may-be illegal char
-        everything_token[where] = get_token_num(everything[where])
-        n_token = get_token_num("\n".join(everything))
-
-    history = everything[1:]
-    return history
 
 
 """

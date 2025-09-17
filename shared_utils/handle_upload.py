@@ -88,6 +88,32 @@ def zip_extract_member_new(self, member, targetpath, pwd):
     return targetpath
 
 
+
+def safe_extract_rar(file_path, dest_dir):
+    import rarfile
+    import posixpath
+    with rarfile.RarFile(file_path) as rf:
+        os.makedirs(dest_dir, exist_ok=True)
+        base_path = os.path.abspath(dest_dir)
+        for file_info in rf.infolist():
+            orig_filename = file_info.filename
+            filename = posixpath.normpath(orig_filename).lstrip('/')
+            # 路径遍历防护
+            if '..' in filename or filename.startswith('../'):
+                raise Exception(f"Attempted Path Traversal in {orig_filename}")
+            # 符号链接防护
+            if hasattr(file_info, 'is_symlink') and file_info.is_symlink():
+                raise Exception(f"Attempted Symlink in {orig_filename}")
+            # 构造完整目标路径
+            target_path = os.path.join(base_path, filename)
+            final_path = os.path.normpath(target_path)
+            # 最终路径校验
+            if not final_path.startswith(base_path):
+                raise Exception(f"Attempted Path Traversal in {orig_filename}")
+        rf.extractall(dest_dir)
+
+
+
 def extract_archive(file_path, dest_dir):
     import zipfile
     import tarfile
@@ -104,30 +130,39 @@ def extract_archive(file_path, dest_dir):
             logger.info("Successfully extracted zip archive to {}".format(dest_dir))
 
     elif file_extension in [".tar", ".gz", ".bz2"]:
-        with tarfile.open(file_path, "r:*") as tarobj:
-            # 清理提取路径，移除任何不安全的元素
-            for member in tarobj.getmembers():
-                member_path = os.path.normpath(member.name)
-                full_path = os.path.join(dest_dir, member_path)
-                full_path = os.path.abspath(full_path)
-                if not full_path.startswith(os.path.abspath(dest_dir) + os.sep):
-                    raise Exception(f"Attempted Path Traversal in {member.name}")
+        try:
+            with tarfile.open(file_path, "r:*") as tarobj:
+                # 清理提取路径，移除任何不安全的元素
+                for member in tarobj.getmembers():
+                    member_path = os.path.normpath(member.name)
+                    full_path = os.path.join(dest_dir, member_path)
+                    full_path = os.path.abspath(full_path)
+                    if member.islnk() or member.issym():
+                        raise Exception(f"Attempted Symlink in {member.name}")
+                    if not full_path.startswith(os.path.abspath(dest_dir) + os.sep):
+                        raise Exception(f"Attempted Path Traversal in {member.name}")
 
-            tarobj.extractall(path=dest_dir)
-            logger.info("Successfully extracted tar archive to {}".format(dest_dir))
+                tarobj.extractall(path=dest_dir)
+                logger.info("Successfully extracted tar archive to {}".format(dest_dir))
+        except tarfile.ReadError as e:
+            if file_extension == ".gz":
+                # 一些特别奇葩的项目，是一个gz文件，里面不是tar，只有一个tex文件
+                import gzip
+                with gzip.open(file_path, 'rb') as f_in:
+                    with open(os.path.join(dest_dir, 'main.tex'), 'wb') as f_out:
+                        f_out.write(f_in.read())
+            else:
+                raise e
 
     # 第三方库，需要预先pip install rarfile
     # 此外，Windows上还需要安装winrar软件，配置其Path环境变量，如"C:\Program Files\WinRAR"才可以
     elif file_extension == ".rar":
         try:
-            import rarfile
-
-            with rarfile.RarFile(file_path) as rf:
-                rf.extractall(path=dest_dir)
-                logger.info("Successfully extracted rar archive to {}".format(dest_dir))
+            import rarfile  # 用来检查rarfile是否安装，不要删除
+            safe_extract_rar(file_path, dest_dir)
         except:
             logger.info("Rar format requires additional dependencies to install")
-            return "\n\n解压失败! 需要安装pip install rarfile来解压rar文件。建议：使用zip压缩格式。"
+            return "<br/><br/>解压失败! 需要安装pip install rarfile来解压rar文件。建议：使用zip压缩格式。"
 
     # 第三方库，需要预先pip install py7zr
     elif file_extension == ".7z":
@@ -139,7 +174,7 @@ def extract_archive(file_path, dest_dir):
                 logger.info("Successfully extracted 7z archive to {}".format(dest_dir))
         except:
             logger.info("7z format requires additional dependencies to install")
-            return "\n\n解压失败! 需要安装pip install py7zr来解压7z文件"
+            return "<br/><br/>解压失败! 需要安装pip install py7zr来解压7z文件"
     else:
         return ""
     return ""

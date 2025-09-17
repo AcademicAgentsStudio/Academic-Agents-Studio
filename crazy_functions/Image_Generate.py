@@ -29,7 +29,7 @@ def gen_image(llm_kwargs, prompt, resolution="1024x1024", model="dall-e-2", qual
         data['quality'] = quality
     if style is not None:
         data['style'] = style
-    response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else url, headers=headers, json=data, proxies=proxies)
+    response = requests.post(url, headers=headers, json=data, proxies=proxies)
     # logger.info(response.content)
     try:
         image_url = json.loads(response.content.decode('utf8'))['data'][0]['url']
@@ -75,7 +75,7 @@ def edit_image(llm_kwargs, prompt, image_path, resolution="1024x1024", model="da
             'size':     (None, resolution),
         }
 
-    response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else url, headers=headers, files=files, proxies=proxies)
+    response = requests.post(url, headers=headers, files=files, proxies=proxies)
     # logger.info(response.content)
     try:
         image_url = json.loads(response.content.decode('utf8'))['data'][0]['url']

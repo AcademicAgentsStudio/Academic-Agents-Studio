@@ -63,9 +63,14 @@ def to_cookie_str(d):
 
 def from_cookie_str(c):
     # Decode the base64-encoded string and unserialize it into a dictionary
-    serialized_dict = base64.b64decode(c.encode("utf-8"))
-    serialized_dict.decode("utf-8")
-    return json.loads(serialized_dict)
+    try:
+        if not c or c.strip() == '':
+            return {}
+        serialized_dict = base64.b64decode(c.encode("utf-8")).decode("utf-8")
+        return json.loads(serialized_dict)
+    except (json.JSONDecodeError, base64.binascii.Error, UnicodeDecodeError, ValueError) as e:
+        print(f"Warning: Failed to decode cookie string: {e}")
+        return {}
 
 
 """
@@ -85,21 +90,6 @@ js_code_for_toggle_darkmode = """() => {
     }
     document.querySelectorAll('code_pending_render').forEach(code => {code.remove();})
 }"""
-
-
-js_code_for_persistent_cookie_init = """(web_cookie_cache, cookie) => {
-    return [getCookie("web_cookie_cache"), cookie];
-}
-"""
-
-# 详见 themes/common.js
-js_code_reset = """
-(a,b,c)=>{
-    let stopButton = document.getElementById("elem_stop");
-    stopButton.click();
-    return reset_conversation(a,b);
-}
-"""
 
 
 js_code_clear = """
@@ -156,23 +146,3 @@ setTimeout(() => {
 }
 """
 
-
-
-js_code_show_or_hide_group2 = """
-(display_panel_arr)=>{
-setTimeout(() => {
-    display_panel_arr = get_checkbox_selected_items("cbsc");
-
-    let searchString = "添加Live2D形象";
-    let ele = "none";
-    if (display_panel_arr.includes(searchString)) {
-        setCookie("js_live2d_show_cookie", "True", 365);
-        loadLive2D();
-    } else {
-        setCookie("js_live2d_show_cookie", "False", 365);
-        $('.waifu').hide();
-    }
-
-}, 50);
-}
-"""

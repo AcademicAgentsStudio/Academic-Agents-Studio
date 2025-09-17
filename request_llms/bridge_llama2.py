@@ -26,7 +26,7 @@ class GetLlamaHandle(LocalLLMHandle):
         import platform
         huggingface_token, device = get_conf('HUGGINGFACE_ACCESS_TOKEN', 'LOCAL_MODEL_DEVICE')
         assert len(huggingface_token) != 0, "没有填写 HUGGINGFACE_ACCESS_TOKEN"
-        with open(os.path.expanduser('~/.cache/huggingface/token'), 'w') as f:
+        with open(os.path.expanduser('~/.cache/huggingface/token'), 'w', encoding='utf8') as f:
             f.write(huggingface_token)
         model_id = 'meta-llama/Llama-2-7b-chat-hf'
         with ProxyNetworkActivate('Download_LLM'):
@@ -46,8 +46,8 @@ class GetLlamaHandle(LocalLLMHandle):
             top_p = kwargs['top_p']
             temperature = kwargs['temperature']
             history = kwargs['history']
-            console_slience = kwargs.get('console_slience', True)
-            return query, max_length, top_p, temperature, history, console_slience
+            console_silence = kwargs.get('console_silence', True)
+            return query, max_length, top_p, temperature, history, console_silence
 
         def convert_messages_to_prompt(query, history):
             prompt = ""
@@ -57,7 +57,7 @@ class GetLlamaHandle(LocalLLMHandle):
             prompt += f"\n[INST]{query}[/INST]"
             return prompt
 
-        query, max_length, top_p, temperature, history, console_slience = adaptor(kwargs)
+        query, max_length, top_p, temperature, history, console_silence = adaptor(kwargs)
         prompt = convert_messages_to_prompt(query, history)
         # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-
         # code from transformers.llama
@@ -72,9 +72,9 @@ class GetLlamaHandle(LocalLLMHandle):
         generated_text = ""
         for new_text in streamer:
             generated_text += new_text
-            if not console_slience: print(new_text, end='')
+            if not console_silence: print(new_text, end='')
             yield generated_text.lstrip(prompt_tk_back).rstrip("</s>")
-        if not console_slience: print()
+        if not console_silence: print()
         # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-
 
     def try_to_import_special_deps(self, **kwargs):

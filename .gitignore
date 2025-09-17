@@ -161,3 +161,7 @@ temp.*
 objdump*
 *.min.*.js
 TODO
+experimental_mods
+search_results
+gg.docx
+unstructured_reader.py

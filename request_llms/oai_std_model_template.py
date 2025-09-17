@@ -2,15 +2,9 @@ import json
 import time
 import traceback
 import requests
-from loguru import logger
 
-# config_private.py放自己的秘密如API和代理网址
-# 读取时首先看是否存在私密的config_private配置文件（不受git管控），如果有，则覆盖原config文件
-from toolbox import (
-    get_conf,
-    update_ui,
-    is_the_upload_folder,
-)
+from loguru import logger
+from toolbox import get_conf, is_the_upload_folder, update_ui, update_ui_latest_msg
 
 proxies, TIMEOUT_SECONDS, MAX_RETRY = get_conf(
     "proxies", "TIMEOUT_SECONDS", "MAX_RETRY"
@@ -36,35 +30,50 @@ def get_full_error(chunk, stream_response):
 
 def decode_chunk(chunk):
     """
-    用于解读"content"和"finish_reason"的内容
+    用于解读"content"和"finish_reason"的内容（如果支持思维链也会返回"reasoning_content"内容）
     """
     chunk = chunk.decode()
-    respose = ""
+    response = ""
+    reasoning_content = ""
     finish_reason = "False"
+
+    # 考虑返回类型是 text/json 和 text/event-stream 两种
+    if chunk.startswith("data: "):
+        chunk = chunk[6:]
+    else:
+        chunk = chunk
+    
     try:
-        chunk = json.loads(chunk[6:])
+        chunk = json.loads(chunk)
     except:
-        respose = ""
+        response = ""
         finish_reason = chunk
+
     # 错误处理部分
     if "error" in chunk:
-        respose = "API_ERROR"
+        response = "API_ERROR"
         try:
             chunk = json.loads(chunk)
             finish_reason = chunk["error"]["code"]
         except:
             finish_reason = "API_ERROR"
-        return respose, finish_reason
+        return response, reasoning_content, finish_reason, str(chunk)
 
     try:
-        respose = chunk["choices"][0]["delta"]["content"]
+        if chunk["choices"][0]["delta"]["content"] is not None:
+            response = chunk["choices"][0]["delta"]["content"]
+    except:
+        pass
+    try:
+        if chunk["choices"][0]["delta"]["reasoning_content"] is not None:
+            reasoning_content = chunk["choices"][0]["delta"]["reasoning_content"]
     except:
         pass
     try:
         finish_reason = chunk["choices"][0]["finish_reason"]
     except:
         pass
-    return respose, finish_reason
+    return response, reasoning_content, finish_reason, str(chunk)
 
 
 def generate_message(input, model, key, history, max_output_token, system_prompt, temperature):
@@ -99,7 +108,7 @@ def generate_message(input, model, key, history, max_output_token, system_prompt
     what_i_ask_now["role"] = "user"
     what_i_ask_now["content"] = input
     messages.append(what_i_ask_now)
-    playload = {
+    payload = {
         "model": model,
         "messages": messages,
         "temperature": temperature,
@@ -107,13 +116,14 @@ def generate_message(input, model, key, history, max_output_token, system_prompt
         "max_tokens": max_output_token,
     }
 
-    return headers, playload
+    return headers, payload
 
 
 def get_predict_function(
         api_key_conf_name,
         max_output_token,
-        disable_proxy = False
+        disable_proxy = False,
+        model_remove_prefix = [],
     ):
     """
     为openai格式的API生成响应函数，其中传入参数：
@@ -128,13 +138,23 @@ def get_predict_function(
 
     APIKEY = get_conf(api_key_conf_name)
 
+    def remove_prefix(model_name):
+        # 去除模型名字的前缀，输入 volcengine-deepseek-r1-250120 会返回 deepseek-r1-250120
+        if not model_remove_prefix:
+            return model_name
+        model_without_prefix = model_name
+        for prefix in model_remove_prefix:
+            if model_without_prefix.startswith(prefix):
+                model_without_prefix = model_without_prefix[len(prefix):]
+        return model_without_prefix
+
     def predict_no_ui_long_connection(
         inputs,
         llm_kwargs,
         history=[],
         sys_prompt="",
         observe_window=None,
-        console_slience=False,
+        console_silence=False,
     ):
         """
         发送至chatGPT，等待回复，一次性完成，不显示中间过程。但内部用stream的方法避免中途网线被掐。
@@ -149,43 +169,38 @@ def get_predict_function(
         observe_window = None：
             用于负责跨越线程传递已经输出的部分，大部分时候仅仅为了fancy的视觉效果，留空即可。observe_window[0]：观测窗。observe_window[1]：看门狗
         """
-        watch_dog_patience = 5  # 看门狗的耐心，设置5秒不准咬人(咬的也不是人
+        from .bridge_all import model_info
+        watch_dog_patience = 5  # 看门狗的耐心，设置5秒不准咬人 (咬的也不是人)
         if len(APIKEY) == 0:
             raise RuntimeError(f"APIKEY为空,请检查配置文件的{APIKEY}")
         if inputs == "":
             inputs = "你好👋"
-        headers, playload = generate_message(
+
+
+        headers, payload = generate_message(
             input=inputs,
-            model=llm_kwargs["llm_model"],
+            model=remove_prefix(llm_kwargs["llm_model"]),
             key=APIKEY,
             history=history,
             max_output_token=max_output_token,
             system_prompt=sys_prompt,
             temperature=llm_kwargs["temperature"],
         )
+
+        reasoning = model_info[llm_kwargs['llm_model']].get('enable_reasoning', False)
+
         retry = 0
         while True:
             try:
-                from .bridge_all import model_info
-
                 endpoint = model_info[llm_kwargs["llm_model"]]["endpoint"]
-                if not disable_proxy:
-                    response = requests.post(
-                        llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint,
-                        headers=headers,
-                        proxies=proxies,
-                        json=playload,
-                        stream=True,
-                        timeout=TIMEOUT_SECONDS,
-                    )
-                else:
-                    response = requests.post(
-                        llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint,
-                        headers=headers,
-                        json=playload,
-                        stream=True,
-                        timeout=TIMEOUT_SECONDS,
-                    )
+                response = requests.post(
+                    endpoint,
+                    headers=headers,
+                    proxies=None if disable_proxy else proxies,
+                    json=payload,
+                    stream=True,
+                    timeout=TIMEOUT_SECONDS,
+                )
                 break
             except:
                 retry += 1
@@ -194,10 +209,13 @@ def get_predict_function(
                     raise TimeoutError
                 if MAX_RETRY != 0:
                     logger.error(f"请求超时，正在重试 ({retry}/{MAX_RETRY}) ……")
-
-        stream_response = response.iter_lines()
+        
         result = ""
         finish_reason = ""
+        if reasoning:
+            reasoning_buffer = ""
+        
+        stream_response = response.iter_lines()
         while True:
             try:
                 chunk = next(stream_response)
@@ -207,9 +225,9 @@ def get_predict_function(
                 break
             except requests.exceptions.ConnectionError:
                 chunk = next(stream_response)  # 失败了，重试一次？再失败就没办法了。
-            response_text, finish_reason = decode_chunk(chunk)
+            response_text, reasoning_content, finish_reason, decoded_chunk = decode_chunk(chunk)
             # 返回的数据流第一次为空，继续等待
-            if response_text == "" and finish_reason != "False":
+            if response_text == "" and (reasoning == False or reasoning_content == "") and finish_reason != "False":
                 continue
             if response_text == "API_ERROR" and (
                 finish_reason != "False" or finish_reason != "stop"
@@ -223,10 +241,12 @@ def get_predict_function(
             if chunk:
                 try:
                     if finish_reason == "stop":
-                        if not console_slience:
+                        if not console_silence:
                             print(f"[response] {result}")
                         break
                     result += response_text
+                    if reasoning:
+                        reasoning_buffer += reasoning_content
                     if observe_window is not None:
                         # 观测窗，把已经获取的数据显示出去
                         if len(observe_window) >= 1:
@@ -241,6 +261,9 @@ def get_predict_function(
                     error_msg = chunk_decoded
                     logger.error(error_msg)
                     raise RuntimeError("Json解析不合常规")
+        if reasoning:
+            paragraphs = ''.join([f'<p style="margin: 1.25em 0;">{line}</p>' for line in reasoning_buffer.split('\n')])
+            return f'''<div class="reasoning_process" >{paragraphs}</div>\n\n''' + result
         return result
 
     def predict(
@@ -259,9 +282,10 @@ def get_predict_function(
         inputs 是本次问询的输入
         top_p, temperature是chatGPT的内部调优参数
         history 是之前的对话列表（注意无论是inputs还是history，内容太长了都会触发token数量溢出的错误）
-        chatbot 为WebUI中显示的对话列表，修改它，然后yeild出去，可以直接修改对话界面内容
+        chatbot 为WebUI中显示的对话列表，修改它，然后yield出去，可以直接修改对话界面内容
         additional_fn代表点击的哪个按钮，按钮见functional.py
         """
+        from .bridge_all import model_info
         if len(APIKEY) == 0:
             raise RuntimeError(f"APIKEY为空,请检查配置文件的{APIKEY}")
         if inputs == "":
@@ -289,41 +313,32 @@ def get_predict_function(
             )  # 刷新界面
             time.sleep(2)
 
-        headers, playload = generate_message(
+        headers, payload = generate_message(
             input=inputs,
-            model=llm_kwargs["llm_model"],
+            model=remove_prefix(llm_kwargs["llm_model"]),
             key=APIKEY,
             history=history,
             max_output_token=max_output_token,
             system_prompt=system_prompt,
             temperature=llm_kwargs["temperature"],
         )
+        
+        reasoning = model_info[llm_kwargs['llm_model']].get('enable_reasoning', False)
 
         history.append(inputs)
         history.append("")
         retry = 0
         while True:
             try:
-                from .bridge_all import model_info
-
                 endpoint = model_info[llm_kwargs["llm_model"]]["endpoint"]
-                if not disable_proxy:
-                    response = requests.post(
-                        llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint,
-                        headers=headers,
-                        proxies=proxies,
-                        json=playload,
-                        stream=True,
-                        timeout=TIMEOUT_SECONDS,
-                    )
-                else:
-                    response = requests.post(
-                        llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint,
-                        headers=headers,
-                        json=playload,
-                        stream=True,
-                        timeout=TIMEOUT_SECONDS,
-                    )
+                response = requests.post(
+                    endpoint,
+                    headers=headers,
+                    proxies=None if disable_proxy else proxies,
+                    json=payload,
+                    stream=True,
+                    timeout=TIMEOUT_SECONDS,
+                )
                 break
             except:
                 retry += 1
@@ -338,18 +353,27 @@ def get_predict_function(
                     raise TimeoutError
 
         gpt_replying_buffer = ""
+        if reasoning:
+            gpt_reasoning_buffer = ""
 
         stream_response = response.iter_lines()
+        wait_counter = 0
         while True:
             try:
                 chunk = next(stream_response)
             except StopIteration:
+                if wait_counter != 0 and gpt_replying_buffer == "":
+                    yield from update_ui_latest_msg(lastmsg="模型调用失败 ...", chatbot=chatbot, history=history, msg="failed")
                 break
             except requests.exceptions.ConnectionError:
                 chunk = next(stream_response)  # 失败了，重试一次？再失败就没办法了。
-            response_text, finish_reason = decode_chunk(chunk)
+            response_text, reasoning_content, finish_reason, decoded_chunk = decode_chunk(chunk)
+            if decoded_chunk == ': keep-alive':
+                wait_counter += 1
+                yield from update_ui_latest_msg(lastmsg="等待中 " + "".join(["."] * (wait_counter%10)), chatbot=chatbot, history=history, msg="waiting ...")
+                continue
             # 返回的数据流第一次为空，继续等待
-            if response_text == "" and finish_reason != "False":
+            if response_text == "" and (reasoning == False or reasoning_content == "") and finish_reason != "False":
                 status_text = f"finish_reason: {finish_reason}"
                 yield from update_ui(
                     chatbot=chatbot, history=history, msg=status_text
@@ -364,7 +388,7 @@ def get_predict_function(
                         chunk_decoded = chunk.decode()
                         chatbot[-1] = (
                             chatbot[-1][0],
-                            "[Local Message] {finish_reason},获得以下报错信息：\n"
+                            f"[Local Message] {finish_reason}, 获得以下报错信息：\n"
                             + chunk_decoded,
                         )
                         yield from update_ui(
@@ -379,9 +403,15 @@ def get_predict_function(
                         logger.info(f"[response] {gpt_replying_buffer}")
                         break
                     status_text = f"finish_reason: {finish_reason}"
-                    gpt_replying_buffer += response_text
-                    # 如果这里抛出异常，一般是文本过长，详情见get_full_error的输出
-                    history[-1] = gpt_replying_buffer
+                    if reasoning:
+                        gpt_replying_buffer += response_text
+                        gpt_reasoning_buffer += reasoning_content
+                        paragraphs = ''.join([f'<p style="margin: 1.25em 0;">{line}</p>' for line in gpt_reasoning_buffer.split('\n')])
+                        history[-1] = f'<div class="reasoning_process">{paragraphs}</div>\n\n---\n\n' + gpt_replying_buffer
+                    else:
+                        gpt_replying_buffer += response_text
+                        # 如果这里抛出异常，一般是文本过长，详情见get_full_error的输出
+                        history[-1] = gpt_replying_buffer
                     chatbot[-1] = (history[-2], history[-1])
                     yield from update_ui(
                         chatbot=chatbot, history=history, msg=status_text

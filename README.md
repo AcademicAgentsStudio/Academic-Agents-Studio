@@ -1,87 +1,120 @@
 <p align="right">
-   <strong>中文</strong> | <a href="./README.en.md">English</a>
+   <strong>中文</strong> | <a href="./docs/README.en.md">English</a>
 </p>
+
 <div align="center">
 
-<img src=./docs/logo.png width=100 />
+<img src="./docs/logo.png" width="120" />
 
 # Academic Agents Platform
 
-### 🤖学术通用智能体应用服务平台
+### 🤖 新一代学术智能体应用服务平台
 
+<p>
+<strong>基于AI驱动的学术研究全流程智能化平台</strong><br>
+支持论文写作、文献分析、代码解释、多语言翻译等学术场景
+</p>
 
 [![Github][Github-image]][Github-url]
 [![License][License-image]][License-url]
-[![Releases][Releases-image]][Releases-url]
-[![Installation][Installation-image]][Installation-url]
-[![Wiki][Wiki-image]][Wiki-url]
-[![PR][PRs-image]][PRs-url]
+[![Python][Python-image]][Python-url]
+[![Gradio][Gradio-image]][Gradio-url]
+[![Stars][Stars-image]][Stars-url]
 
-[Github-image]: https://img.shields.io/badge/github-12100E.svg?style=flat-square
-[License-image]: https://img.shields.io/github/license/AIOAGI/AcademicAgentsPlatform?label=License&style=flat-square&color=orange
-[Releases-image]: https://img.shields.io/github/release/AIOAGI/AcademicAgentsPlatform?label=Release&style=flat-square&color=blue
-[Installation-image]: https://img.shields.io/badge/dynamic/json?color=blue&url=https://raw.githubusercontent.com/AIOAGI/AcademicAgentsPlatform/master/version&query=$.version&label=Installation&style=flat-square
-[Wiki-image]: https://img.shields.io/badge/wiki-项目文档-black?style=flat-square
-[PRs-image]: https://img.shields.io/badge/PRs-welcome-pink?style=flat-square
+[Github-image]: https://img.shields.io/badge/GitHub-Repository-black?style=flat-square&logo=github
+[License-image]: https://img.shields.io/badge/License-MIT-orange?style=flat-square
+[Python-image]: https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python
+[Gradio-image]: https://img.shields.io/badge/Gradio-Web%20UI-yellow?style=flat-square
+[Stars-image]: https://img.shields.io/github/stars/AIOAGI/AcademicAgentsPlatform?style=flat-square
 
 [Github-url]: https://github.com/AIOAGI/AcademicAgentsPlatform
 [License-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/blob/master/LICENSE
-[Releases-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/releases
-[Installation-url]: https://github.com/AIOAGI/AcademicAgentsPlatform#installation
-[Wiki-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/wiki
-[PRs-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/pulls
-
+[Python-url]: https://www.python.org/
+[Gradio-url]: https://gradio.app/
+[Stars-url]: https://github.com/AIOAGI/AcademicAgentsPlatform/stargazers
 
 </div>
 
-> [!NOTE]
-> 本项目为开源项目，在中科院学术版GPT：[GPT Academic](https://github.com/binary-husky/gpt_academic)的基础上研发的新一代学术智能体平台
-<br>
+---
 
+## 🎯 项目简介
 
-**如果喜欢这个项目，请给它一个Star；如果您发明了好用的快捷键或插件，欢迎发pull requests！**
+**Academic Agents Platform** 是一个基于 [GPT Academic](https://github.com/binary-husky/gpt_academic) 深度优化的新一代学术智能体平台。我们专注于为学术研究人员、教育工作者和学生提供全方位的AI辅助工具。
 
-If you like this project, please give it a Star.
-Read this in [English](docs/README.English.md) | [日本語](docs/README.Japanese.md) | [한국어](docs/README.Korean.md) | [Русский](docs/README.Russian.md) | [Français](docs/README.French.md). All translations have been provided by the project itself. To translate this project to arbitrary language with GPT, read and run [`multi_language.py`](multi_language.py) (experimental).
-<br>
+### ✨ 核心特色
 
-> [!NOTE]
-> 1.本项目中每个文件的功能都在[自译解报告](https://github.com/binary-husky/gpt_academic/wiki/GPT‐Academic项目自译解报告)`self_analysis.md`详细说明。随着版本的迭代，您也可以随时自行点击相关函数插件，调用GPT重新生成项目的自我解析报告。常见问题请查阅wiki。
->    [![常规安装方法](https://img.shields.io/static/v1?label=&message=常规安装方法&color=gray)](#installation)  [![一键安装脚本](https://img.shields.io/static/v1?label=&message=一键安装脚本&color=gray)](https://github.com/binary-husky/gpt_academic/releases)  [![配置说明](https://img.shields.io/static/v1?label=&message=配置说明&color=gray)](https://github.com/binary-husky/gpt_academic/wiki/项目配置说明) [![wiki](https://img.shields.io/static/v1?label=&message=wiki&color=gray)]([https://github.com/binary-husky/gpt_academic/wiki/项目配置说明](https://github.com/binary-husky/gpt_academic/wiki))
->
-> 2.本项目兼容并鼓励尝试国内中文大语言基座模型如通义千问，智谱GLM等。支持多个api-key共存，可在配置文件中填写如`API_KEY="openai-key1,openai-key2,azure-key3,api2d-key4"`。需要临时更换`API_KEY`时，在输入区输入临时的`API_KEY`然后回车键提交即可生效。
+- 🔬 **学术专精**：针对学术场景深度优化，支持多种学术任务
+- 🌐 **多模型支持**：集成GPT、Claude、文心一言、通义千问等主流AI模型
+- 📚 **文档处理**：支持PDF、LaTeX、Markdown等多种格式的智能处理
+- 🎨 **界面友好**：基于Gradio构建，支持暗色模式和多种主题
+- 🔧 **高度可定制**：支持自定义插件和快捷键，满足个性化需求
+- 🚀 **部署简单**：支持本地部署、Docker部署和云端部署
 
-<br><br>
+## 🔧 主要功能
 
 <div align="center">
 
-功能（⭐= 近期新增功能） | 描述
---- | ---
-⭐[接入新模型](https://github.com/binary-husky/gpt_academic/wiki/%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E6%A8%A1%E5%9E%8B) | 百度[千帆](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Nlks5zkzu)与文心一言, 通义千问[Qwen](https://modelscope.cn/models/qwen/Qwen-7B-Chat/summary)，上海AI-Lab[书生](https://github.com/InternLM/InternLM)，讯飞[星火](https://xinghuo.xfyun.cn/)，[LLaMa2](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)，[智谱GLM4](https://open.bigmodel.cn/)，DALLE3, [DeepseekCoder](https://coder.deepseek.com/)
-⭐支持mermaid图像渲染 | 支持让GPT生成[流程图](https://www.bilibili.com/video/BV18c41147H9/)、状态转移图、甘特图、饼状图、GitGraph等等（3.7版本）
-⭐Arxiv论文精细翻译 ([Docker](https://github.com/binary-husky/gpt_academic/pkgs/container/gpt_academic_with_latex)) | [插件] 一键[以超高质量翻译arxiv论文](https://www.bilibili.com/video/BV1dz4y1v77A/)，目前最好的论文翻译工具
-⭐[实时语音对话输入](https://github.com/binary-husky/gpt_academic/blob/master/docs/use_audio.md) | [插件] 异步[监听音频](https://www.bilibili.com/video/BV1AV4y187Uy/)，自动断句，自动寻找回答时机
-⭐AutoGen多智能体插件 | [插件] 借助微软AutoGen，探索多Agent的智能涌现可能！
-⭐虚空终端插件 | [插件] 能够使用自然语言直接调度本项目其他插件
-润色、翻译、代码解释 | 一键润色、翻译、查找论文语法错误、解释代码
-[自定义快捷键](https://www.bilibili.com/video/BV14s4y1E7jN) | 支持自定义快捷键
-模块化设计 | 支持自定义强大的[插件](https://github.com/binary-husky/gpt_academic/tree/master/crazy_functions)，插件支持[热更新](https://github.com/binary-husky/gpt_academic/wiki/%E5%87%BD%E6%95%B0%E6%8F%92%E4%BB%B6%E6%8C%87%E5%8D%97)
-[程序剖析](https://www.bilibili.com/video/BV1cj411A7VW) | [插件] 一键剖析Python/C/C++/Java/Lua/...项目树 或 [自我剖析](https://www.bilibili.com/video/BV1cj411A7VW)
-读论文、[翻译](https://www.bilibili.com/video/BV1KT411x7Wn)论文 | [插件] 一键解读latex/pdf论文全文并生成摘要
-Latex全文[翻译](https://www.bilibili.com/video/BV1nk4y1Y7Js/)、[润色](https://www.bilibili.com/video/BV1FT411H7c5/) | [插件] 一键翻译或润色latex论文
-批量注释生成 | [插件] 一键批量生成函数注释
-Markdown[中英互译](https://www.bilibili.com/video/BV1yo4y157jV/) | [插件] 看到上面5种语言的[README](https://github.com/binary-husky/gpt_academic/blob/master/docs/README.English.md)了吗？就是出自他的手笔
-[PDF论文全文翻译功能](https://www.bilibili.com/video/BV1KT411x7Wn) | [插件] PDF论文提取题目&摘要+翻译全文（多线程）
-[Arxiv小助手](https://www.bilibili.com/video/BV1LM4y1279X) | [插件] 输入arxiv文章url即可一键翻译摘要+下载PDF
-Latex论文一键校对 | [插件] 仿Grammarly对Latex文章进行语法、拼写纠错+输出对照PDF
-[谷歌学术统合小助手](https://www.bilibili.com/video/BV19L411U7ia) | [插件] 给定任意谷歌学术搜索页面URL，让gpt帮你[写relatedworks](https://www.bilibili.com/video/BV1GP411U7Az/)
-互联网信息聚合+GPT | [插件] 一键[让GPT从互联网获取信息](https://www.bilibili.com/video/BV1om4y127ck)回答问题，让信息永不过时
-公式/图片/表格显示 | 可以同时显示公式的[tex形式和渲染形式](https://user-images.githubusercontent.com/96192199/230598842-1d7fcddd-815d-40ee-af60-baf488a199df.png)，支持公式、代码高亮
-启动暗色[主题](https://github.com/binary-husky/gpt_academic/issues/173) | 在浏览器url后面添加```/?__theme=dark```可以切换dark主题
-[多LLM模型](https://www.bilibili.com/video/BV1wT411p7yf)支持 | 同时被GPT3.5、GPT4、[清华ChatGLM2](https://github.com/THUDM/ChatGLM2-6B)、[复旦MOSS](https://github.com/OpenLMLab/MOSS)伺候的感觉一定会很不错吧？
-更多LLM模型接入，支持[huggingface部署](https://huggingface.co/spaces/qingxu98/gpt-academic) | 加入Newbing接口(新必应)，引入清华[Jittorllms](https://github.com/Jittor/JittorLLMs)支持[LLaMA](https://github.com/facebookresearch/llama)和[盘古α](https://openi.org.cn/pangu/)
-⭐[void-terminal](https://github.com/binary-husky/void-terminal) pip包 | 脱离GUI，在Python中直接调用本项目的所有函数插件（开发中）
-更多新功能展示 (图像生成等) …… | 见本文档结尾处 ……
+| 功能类别 | 核心功能 | 说明 |
+|---------|---------|------|
+| 🤖 **AI模型** | 多模型支持 | OpenAI GPT系列、Claude、文心一言、通义千问、智谱GLM等 |
+| 📄 **文档处理** | PDF解析翻译 | 一键翻译学术论文，保持格式和公式 |
+| | LaTeX处理 | 支持LaTeX论文润色、翻译、语法检查 |
+| | Markdown转换 | 智能转换和格式化Markdown文档 |
+| 🔍 **学术工具** | Arxiv论文助手 | 快速获取和翻译Arxiv论文 |
+| | 文献综述生成 | 基于多篇论文生成综合性文献综述 |
+| | 代码解释分析 | 深度解析各种编程语言代码 |
+| 🎨 **可视化** | 流程图生成 | 支持Mermaid图表、脑图、甘特图等 |
+| | 公式渲染 | LaTeX公式的可视化渲染和编辑 |
+| 🔊 **交互增强** | 语音对话 | 实时语音输入和TTS语音输出 |
+| | 虚空终端 | 自然语言调用各种插件功能 |
+| 🛠️ **扩展性** | 插件系统 | 丰富的插件库和自定义插件支持 |
+| | 主题定制 | 多种界面主题和个性化设置 |
+
+</div>
+
+## 🚀 快速开始
+
+### 环境要求
+
+- **Python**: 3.9-3.11 (推荐 3.10)
+- **操作系统**: Windows、Linux、macOS
+- **内存**: 建议4GB以上
+- **网络**: 访问AI模型API需要稳定网络连接
+
+### 一键安装 (推荐)
+
+```bash
+# 克隆项目
+git clone https://github.com/AIOAGI/AcademicAgentsPlatform.git
+cd AcademicAgentsPlatform
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 配置API Key (在config.py中)
+# API_KEY = "your-api-key-here"
+
+# 启动应用
+python main.py
+```
+
+### Docker 部署
+
+```bash
+# 拉取镜像
+docker pull aioagi/academic-agents-platform:latest
+
+# 运行容器
+docker run -d -p 7860:7860 \
+  -e API_KEY="your-api-key" \
+  aioagi/academic-agents-platform:latest
+```
+
+访问 `http://localhost:7860` 即可使用。
+
+</div>
+
+<br><br>
 </div>
 
 
@@ -126,20 +159,20 @@ Latex论文一键校对 | [插件] 仿Grammarly对Latex文章进行语法、拼�
 
 ```mermaid
 flowchart TD
-    A{"安装方法"} --> W1("I. 🔑直接运行 (Windows, Linux or MacOS)")
-    W1 --> W11["1. Python pip包管理依赖"]
-    W1 --> W12["2. Anaconda包管理依赖（推荐⭐）"]
+    A{"安装方法"} --> W1("I 🔑直接运行 (Windows, Linux or MacOS)")
+    W1 --> W11["1 Python pip包管理依赖"]
+    W1 --> W12["2 Anaconda包管理依赖（推荐⭐）"]
 
-    A --> W2["II. 🐳使用Docker (Windows, Linux or MacOS)"]
+    A --> W2["II 🐳使用Docker (Windows, Linux or MacOS)"]
 
-    W2 --> k1["1. 部署项目全部能力的大镜像（推荐⭐）"]
-    W2 --> k2["2. 仅在线模型（GPT, GLM4等）镜像"]
-    W2 --> k3["3. 在线模型 + Latex的大镜像"]
+    W2 --> k1["1 部署项目全部能力的大镜像（推荐⭐）"]
+    W2 --> k2["2 仅在线模型（GPT, GLM4等）镜像"]
+    W2 --> k3["3 在线模型 + Latex的大镜像"]
 
-    A --> W4["IV. 🚀其他部署方法"]
-    W4 --> C1["1. Windows/MacOS 一键安装运行脚本（推荐⭐）"]
-    W4 --> C2["2. Huggingface, Sealos远程部署"]
-    W4 --> C4["3. ... 其他 ..."]
+    A --> W4["IV 🚀其他部署方法"]
+    W4 --> C1["1 Windows/MacOS 一键安装运行脚本（推荐⭐）"]
+    W4 --> C2["2 Huggingface, Sealos远程部署"]
+    W4 --> C4["3 其他 ..."]
 ```
 
 ### 安装方法I：直接运行 (Windows, Linux or MacOS)
@@ -172,26 +205,32 @@ flowchart TD
     ```
 
 
-<details><summary>如果需要支持清华ChatGLM2/复旦MOSS/RWKV作为后端，请点击展开此处</summary>
+<details><summary>如果需要支持清华ChatGLM系列/复旦MOSS/RWKV作为后端，请点击展开此处</summary>
 <p>
 
-【可选步骤】如果需要支持清华ChatGLM3/复旦MOSS作为后端，需要额外安装更多依赖（前提条件：熟悉Python + 用过Pytorch + 电脑配置够强）：
+【可选步骤】如果需要支持清华ChatGLM系列/复旦MOSS作为后端，需要额外安装更多依赖（前提条件：熟悉Python + 用过Pytorch + 电脑配置够强）：
 
 ```sh
 # 【可选步骤I】支持清华ChatGLM3。清华ChatGLM备注：如果遇到"Call ChatGLM fail 不能正常加载ChatGLM的参数" 错误，参考如下： 1：以上默认安装的为torch+cpu版，使用cuda需要卸载torch重新安装torch+cuda； 2：如因本机配置不够无法加载模型，可以修改request_llm/bridge_chatglm.py中的模型精度, 将 AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True) 都修改为 AutoTokenizer.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True)
 python -m pip install -r request_llms/requirements_chatglm.txt
 
-# 【可选步骤II】支持复旦MOSS
+# 【可选步骤II】支持清华ChatGLM4 注意：此模型至少需要24G显存
+python -m pip install -r request_llms/requirements_chatglm4.txt
+# 可使用modelscope下载ChatGLM4模型
+# pip install modelscope
+# modelscope download --model ZhipuAI/glm-4-9b-chat --local_dir ./THUDM/glm-4-9b-chat
+
+# 【可选步骤III】支持复旦MOSS
 python -m pip install -r request_llms/requirements_moss.txt
 git clone --depth=1 https://github.com/OpenLMLab/MOSS.git request_llms/moss  # 注意执行此行代码时，必须处于项目根路径
 
-# 【可选步骤III】支持RWKV Runner
+# 【可选步骤IV】支持RWKV Runner
 参考wiki：https://github.com/binary-husky/gpt_academic/wiki/%E9%80%82%E9%85%8DRWKV-Runner
 
-# 【可选步骤IV】确保config.py配置文件的AVAIL_LLM_MODELS包含了期望的模型，目前支持的全部模型如下(jittorllms系列目前仅支持docker方案)：
+# 【可选步骤V】确保config.py配置文件的AVAIL_LLM_MODELS包含了期望的模型，目前支持的全部模型如下(jittorllms系列目前仅支持docker方案)：
 AVAIL_LLM_MODELS = ["gpt-3.5-turbo", "api2d-gpt-3.5-turbo", "gpt-4", "api2d-gpt-4", "chatglm", "moss"] # + ["jittorllms_rwkv", "jittorllms_pangualpha", "jittorllms_llama"]
 
-# 【可选步骤V】支持本地模型INT8,INT4量化（这里所指的模型本身不是量化版本，目前deepseek-coder支持，后面测试后会加入更多模型量化选择）
+# 【可选步骤VI】支持本地模型INT8,INT4量化（这里所指的模型本身不是量化版本，目前deepseek-coder支持，后面测试后会加入更多模型量化选择）
 pip install bitsandbyte
 # windows用户安装bitsandbytes需要使用下面bitsandbytes-windows-webui
 python -m pip install bitsandbytes --prefer-binary --extra-index-url=https://jllllll.github.io/bitsandbytes-windows-webui
@@ -419,7 +458,6 @@ timeline LR
 1. `master` 分支: 主分支，稳定版
 2. `frontier` 分支: 开发分支，测试版
 3. 如何[接入其他大模型](request_llms/README.md)
-4. 访问GPT-Academic的[在线服务并支持我们](https://github.com/binary-husky/gpt_academic/wiki/online)
 
 ### V：参考与学习
 

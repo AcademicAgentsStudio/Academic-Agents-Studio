@@ -31,7 +31,7 @@ class MoonShotInit:
                     files.append(f)
                 for file in files:
                     if file.split('.')[-1] in ['pdf']:
-                        with open(file, 'r') as fp:
+                        with open(file, 'r', encoding='utf8') as fp:
                             from crazy_functions.crazy_utils import read_and_clean_pdf_text
                             file_content, _ = read_and_clean_pdf_text(fp)
                         what_ask.append({"role": "system", "content": file_content})
@@ -100,7 +100,7 @@ class MoonShotInit:
 
     def generate_messages(self, inputs, llm_kwargs, history, system_prompt, stream):
         payload, headers = self.generate_payload(inputs, llm_kwargs, history, system_prompt, stream)
-        response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else self.url, headers=headers, json=payload, stream=stream)
+        response = requests.post(self.url, headers=headers, json=payload, stream=stream)
 
         chunk_content = ""
         gpt_bro_result = ""
@@ -169,7 +169,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     log_chat(llm_model=llm_kwargs["llm_model"], input_str=inputs, output_str=gpt_bro_result)
 
 def predict_no_ui_long_connection(inputs, llm_kwargs, history=[], sys_prompt="", observe_window=None,
-                                  console_slience=False):
+                                  console_silence=False):
     gpt_bro_init = MoonShotInit()
     watch_dog_patience = 60  # 看门狗的耐心, 设置10秒即可
     stream_response = gpt_bro_init.generate_messages(inputs, llm_kwargs, history, sys_prompt, True)

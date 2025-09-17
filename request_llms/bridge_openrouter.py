@@ -119,7 +119,7 @@ def verify_endpoint(endpoint):
         raise ValueError("Endpoint不正确, 请检查AZURE_ENDPOINT的配置! 当前的Endpoint为:" + endpoint)
     return endpoint
 
-def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], sys_prompt:str="", observe_window:list=None, console_slience:bool=False):
+def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], sys_prompt:str="", observe_window:list=None, console_silence:bool=False):
     """
     发送至chatGPT，等待回复，一次性完成，不显示中间过程。但内部用stream的方法避免中途网线被掐。
     inputs：
@@ -146,7 +146,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
         try:
             # make a POST request to the API endpoint, stream=False
             endpoint = verify_endpoint(model_info[llm_kwargs['llm_model']]['endpoint'])
-            response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint, headers=headers, proxies=proxies,
+            response = requests.post(endpoint, headers=headers, proxies=proxies,
                                     json=payload, stream=stream, timeout=TIMEOUT_SECONDS); break
         except requests.exceptions.ReadTimeout as e:
             retry += 1
@@ -170,7 +170,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
         except requests.exceptions.ConnectionError:
             chunk = next(stream_response) # 失败了，重试一次？再失败就没办法了。
         chunk_decoded, chunkjson, has_choices, choice_valid, has_content, has_role = decode_chunk(chunk)
-        if len(chunk_decoded)==0: continue
+        if len(chunk_decoded)==0 or chunk_decoded.startswith(':'): continue
         if not chunk_decoded.startswith('data:'):
             error_msg = get_full_error(chunk, stream_response).decode()
             if "reduce the length" in error_msg:
@@ -181,9 +181,6 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
                 raise RuntimeError("OpenAI拒绝了请求：" + error_msg)
         if ('data: [DONE]' in chunk_decoded): break # api2d 正常完成
         # 提前读取一些信息 （用于判断异常）
-        if (has_choices and not choice_valid) or ('OPENROUTER PROCESSING' in chunk_decoded):
-            # 一些垃圾第三方接口的出现这样的错误，openrouter的特殊处理
-            continue
         json_data = chunkjson['choices'][0]
         delta = json_data["delta"]
         if len(delta) == 0: break
@@ -191,7 +188,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
         if (not has_content) and (not has_role): continue # raise RuntimeError("发现不标准的第三方接口："+delta)
         if has_content: # has_role = True/False
             result += delta["content"]
-            if not console_slience: print(delta["content"], end='')
+            if not console_silence: print(delta["content"], end='')
             if observe_window is not None:
                 # 观测窗，把已经获取的数据显示出去
                 if len(observe_window) >= 1:
@@ -216,7 +213,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     inputs 是本次问询的输入
     top_p, temperature是chatGPT的内部调优参数
     history 是之前的对话列表（注意无论是inputs还是history，内容太长了都会触发token数量溢出的错误）
-    chatbot 为WebUI中显示的对话列表，修改它，然后yeild出去，可以直接修改对话界面内容
+    chatbot 为WebUI中显示的对话列表，修改它，然后yield出去，可以直接修改对话界面内容
     additional_fn代表点击的哪个按钮，按钮见functional.py
     """
     from request_llms.bridge_all import model_info
@@ -284,7 +281,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     while True:
         try:
             # make a POST request to the API endpoint, stream=True
-            response = requests.post(llm_kwargs['api_server'] if llm_kwargs['api_server'] is not None else endpoint, headers=headers, proxies=proxies,
+            response = requests.post(endpoint, headers=headers, proxies=proxies,
                                     json=payload, stream=stream, timeout=TIMEOUT_SECONDS);break
         except:
             retry += 1
@@ -328,8 +325,7 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
 
             if chunk:
                 try:
-                    if (has_choices and not choice_valid) or ('OPENROUTER PROCESSING' in chunk_decoded):
-                        # 一些垃圾第三方接口的出现这样的错误, 或者OPENROUTER的特殊处理,因为OPENROUTER的数据流未连接到模型时会出现OPENROUTER PROCESSING
+                    if (has_choices and not choice_valid) or chunk_decoded.startswith(':'):
                         continue
                     if ('data: [DONE]' not in chunk_decoded) and len(chunk_decoded) > 0 and (chunkjson is None):
                         # 传递进来一些奇怪的东西
@@ -516,7 +512,7 @@ def generate_payload(inputs:str, llm_kwargs:dict, history:list, system_prompt:st
         model, _ = read_one_api_model_name(model)
     if llm_kwargs['llm_model'].startswith('openrouter-'):
         model = llm_kwargs['llm_model'][len('openrouter-'):]
-        model= read_one_api_model_name(model)
+        model, _= read_one_api_model_name(model)
     if model == "gpt-3.5-random": # 随机选择, 绕过openai访问频率限制
         model = random.choice([
             "gpt-3.5-turbo",

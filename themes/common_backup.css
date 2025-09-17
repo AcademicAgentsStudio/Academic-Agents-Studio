@@ -1,0 +1,41 @@
+/* 简化版本 - 用于测试 */
+:root {
+    --gpt-academic-message-font-size: 15px;
+}
+
+.message {
+    font-size: var(--gpt-academic-message-font-size) !important;
+}
+
+/* 基础样式保持不变 */
+.welcome-card-container {
+    text-align: center;
+    margin: 20px auto;
+    display: flex;
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.welcome-card {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    flex: 1 1 300px;
+    min-width: 280px;
+    max-width: 400px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.welcome-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
