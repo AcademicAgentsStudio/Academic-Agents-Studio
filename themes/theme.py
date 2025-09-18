@@ -63,14 +63,9 @@ def to_cookie_str(d):
 
 def from_cookie_str(c):
     # Decode the base64-encoded string and unserialize it into a dictionary
-    try:
-        if not c or c.strip() == '':
-            return {}
-        serialized_dict = base64.b64decode(c.encode("utf-8")).decode("utf-8")
-        return json.loads(serialized_dict)
-    except (json.JSONDecodeError, base64.binascii.Error, UnicodeDecodeError, ValueError) as e:
-        print(f"Warning: Failed to decode cookie string: {e}")
-        return {}
+    serialized_dict = base64.b64decode(c.encode("utf-8"))
+    serialized_dict.decode("utf-8")
+    return json.loads(serialized_dict)
 
 
 """

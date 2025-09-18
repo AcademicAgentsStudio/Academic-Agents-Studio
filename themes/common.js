@@ -1524,12 +1524,5 @@ async function run_multiplex_shift(multiplex_sel) {
 
 
 async function persistent_cookie_init(web_cookie_cache, cookie) {
-    try {
-        // 安全地获取localStorage，如果失败则返回空字符串
-        const cached_value = localStorage.getItem('web_cookie_cache') || '';
-        return [cached_value, cookie];
-    } catch (error) {
-        console.warn('Failed to access localStorage:', error);
-        return ['', cookie];
-    }
+    return [localStorage.getItem('web_cookie_cache'), cookie];
 }

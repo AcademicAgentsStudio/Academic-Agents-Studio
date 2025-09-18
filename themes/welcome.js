@@ -86,7 +86,7 @@ class WelcomeMessage {
         this.static_welcome_message_previous = [];
         this.reflesh_time_interval = 15 * 1000;
         this.update_time_interval = 2 * 1000;
-        this.major_title = "欢迎使用Academic Agents Platform";
+        this.major_title = "欢迎使用Academic Agents 学术智能体平台";
 
         const reflesh_render_status = () => {
             for (let index = 0; index < this.card_array.length; index++) {

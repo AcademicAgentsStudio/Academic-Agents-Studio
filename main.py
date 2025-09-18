@@ -60,15 +60,29 @@ def main():
     from themes.theme import adjust_theme, advanced_css, theme_declaration, js_code_clear, js_code_show_or_hide
     from themes.theme import js_code_for_toggle_darkmode
     from themes.theme import load_dynamic_theme, to_cookie_str, from_cookie_str, assign_user_uuid
-    title_html = f"""<div class="header-container">
-        <h1 class="main-title">
-            <span class="title-icon">🚀</span>
-            <span class="title-text">Academic Agents</span>
-            <span class="title-version">{get_current_version()}</span>
-        </h1>
-        <p class="subtitle">学术智能体应用服务平台 - 智能研究助手</p>
-    </div>{theme_declaration}"""
-
+    title_html = f"""
+        <div class="header-container">
+            <div class="tech-grid-bg"></div>
+            <div class="header-content">
+                <h1 class="main-title">
+                    <div class="title-glow"></div>
+                    <span class="title-icon">🚀</span>
+                    <span class="title-text">
+                        <span class="text-gradient">Academic</span>
+                        <span class="text-accent">Agents</span>
+                    </span>
+                    <span class="title-version">
+                        <div class="version-chip">{get_current_version()}</div>
+                    </span>
+                </h1>
+                <div class="subtitle-container">
+                    <div class="subtitle-line"></div>
+                    <p class="subtitle">学术智能体应用服务平台 - 智能研究助手</p>
+                    <div class="subtitle-line"></div>
+                </div>
+            </div>
+        </div>
+        """
 
     # 一些普通功能模块
     from core_functional import get_core_functions
@@ -117,7 +131,13 @@ def main():
             with gr_L2(scale=1, elem_id="gpt-panel"):
                 with gr.Accordion("输入区", open=True, elem_id="input-panel") as area_input_primary:
                     with gr.Row():
-                        txt = gr.Textbox(show_label=False, placeholder="Input question here.", elem_id='user_input_main').style(container=False)
+                        txt = gr.Textbox(
+                            show_label=False,
+                            placeholder="🚀 在此输入您的问题或指令...\n\n💡 提示：\n• 按 Enter 换行\n• 按 Shift+Enter 提交\n• 支持拖拽文件到此处\n• 可输入临时API_KEY覆盖设置",
+                            elem_id='user_input_main',
+                            lines=3,
+                            max_lines=10
+                        ).style(container=False)
                     with gr.Row(elem_id="gpt-submit-row"):
                         multiplex_submit_btn = gr.Button("提交", elem_id="elem_submit_visible", variant="primary")
                         multiplex_sel = gr.Dropdown(
@@ -133,7 +153,7 @@ def main():
                         with gr.Row():
                             audio_mic = gr.Audio(source="microphone", type="numpy", elem_id="elem_audio", streaming=True, show_label=False).style(container=False)
                     with gr.Row():
-                        status = gr.Markdown(f"Tip: 按Enter提交, 按Shift+Enter换行。支持将文件直接粘贴到输入区。", elem_id="state-panel")
+                        status = gr.Markdown("✨ **智能助手就绪** | 💡 使用技巧：支持文件拖拽、多行输入、快捷键操作 | 🔧 可随时切换模型和插件", elem_id="state-panel")
 
                 with gr.Accordion("基础功能区", open=True, elem_id="basic-panel") as area_basic_fn:
                     with gr.Row():
