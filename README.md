@@ -39,7 +39,7 @@
 
 ## 🎯 项目简介
 
-**Academic Agents Platform** 是一个基于 [GPT Academic](https://github.com/binary-husky/gpt_academic) 深度优化的新一代学术智能体平台。我们专注于为学术研究人员、教育工作者和学生提供全方位的AI辅助工具。
+**Academic Agents Platform** 是一个基于曾经爆火的中科院学术版 GPT Academic 深度优化的新一代学术智能体平台。我们专注于为学术研究人员、教育工作者和学生提供全方位的AI辅助工具。
 
 ### ✨ 核心特色
 
