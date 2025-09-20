@@ -25,13 +25,13 @@
 [License-image]: https://img.shields.io/badge/License-MIT-orange?style=flat-square
 [Python-image]: https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python
 [Gradio-image]: https://img.shields.io/badge/Gradio-Web%20UI-yellow?style=flat-square
-[Stars-image]: https://img.shields.io/github/stars/AIOAGI/AcademicAgentsStudio?style=flat-square
+[Stars-image]: https://img.shields.io/github/stars/AcademicAgentsStudio?style=flat-square
 
-[Github-url]: https://github.com/AIOAGI/AcademicAgentsStudio
-[License-url]: https://github.com/AIOAGI/AcademicAgentsStudio/blob/master/LICENSE
+[Github-url]: https://github.com/AcademicAgentsStudio
+[License-url]: https://github.com/AcademicAgentsStudio/blob/master/LICENSE
 [Python-url]: https://www.python.org/
 [Gradio-url]: https://gradio.app/
-[Stars-url]: https://github.com/AIOAGI/AcademicAgentsStudio/stargazers
+[Stars-url]: https://github.com/AcademicAgentsStudio/stargazers
 
 </div>
 
@@ -88,7 +88,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/AIOAGI/AcademicAgentsStudio.git
+git clone https://github.com/AcademicAgentsStudio.git
 cd AcademicAgentsStudio
 
 # 安装依赖
@@ -197,17 +197,17 @@ flowchart TD
 1. 下载项目
 
     ```sh
-    git clone --depth=1 https://github.com/AIOAGI/AcademicAgentsStudio.git
+    git clone --depth=1 https://github.com/AcademicAgentsStudio.git
     cd gpt_academic
     ```
 
 2. 配置API_KEY等变量
 
-    在`config.py`中，配置API KEY等变量。[特殊网络环境设置方法](https://github.com/AIOAGI/AcademicAgentsStudio/issues/1)、[Wiki-项目配置说明](https://github.com/AIOAGI/AcademicAgentsStudio/wiki/项目配置说明)。
+    在`config.py`中，配置API KEY等变量。[特殊网络环境设置方法](https://github.com/AcademicAgentsStudio/issues/1)、[Wiki-项目配置说明](https://github.com/AcademicAgentsStudio/wiki/项目配置说明)。
 
     「 程序会优先检查是否存在名为`config_private.py`的私密配置文件，并用其中的配置覆盖`config.py`的同名配置。如您能理解以上读取逻辑，我们强烈建议您在`config.py`同路径下创建一个名为`config_private.py`的新配置文件，并使用`config_private.py`配置项目，从而确保自动更新时不会丢失配置 」。
 
-    「 支持通过`环境变量`配置项目，环境变量的书写格式参考`docker-compose.yml`文件或者我们的[Wiki页面](https://github.com/AIOAGI/AcademicAgentsStudio/wiki/项目配置说明)。配置读取优先级: `环境变量` > `config_private.py` > `config.py` 」。
+    「 支持通过`环境变量`配置项目，环境变量的书写格式参考`docker-compose.yml`文件或者我们的[Wiki页面](https://github.com/AcademicAgentsStudio/wiki/项目配置说明)。配置读取优先级: `环境变量` > `config_private.py` > `config.py` 」。
 
 
 3. 安装依赖
@@ -242,7 +242,7 @@ python -m pip install -r request_llms/requirements_moss.txt
 git clone --depth=1 https://github.com/OpenLMLab/MOSS.git request_llms/moss  # 注意执行此行代码时，必须处于项目根路径
 
 # 【可选步骤IV】支持RWKV Runner
-参考wiki：https://github.com/AIOAGI/AcademicAgentsStudio/wiki/%E9%80%82%E9%85%8DRWKV-Runner
+参考wiki：https://github.com/AcademicAgentsStudio/wiki/%E9%80%82%E9%85%8DRWKV-Runner
 
 # 【可选步骤V】确保config.py配置文件的AVAIL_LLM_MODELS包含了期望的模型，目前支持的全部模型如下(jittorllms系列目前仅支持docker方案)：
 AVAIL_LLM_MODELS = ["gpt-3.5-turbo", "api2d-gpt-3.5-turbo", "gpt-4", "api2d-gpt-4", "chatglm", "moss"] # + ["jittorllms_rwkv", "jittorllms_pangualpha", "jittorllms_llama"]
@@ -295,15 +295,15 @@ P.S. 如果需要依赖Latex的插件功能，请见Wiki。另外，您也可以
 
 ### 安装方法III：其他部署方法
 1. **Windows一键运行脚本**。
-完全不熟悉python环境的Windows用户可以下载[Release](https://github.com/AIOAGI/AcademicAgentsStudio/releases)中发布的一键运行脚本安装无本地模型的版本。脚本贡献来源：[oobabooga](https://github.com/oobabooga/one-click-installers)。
+完全不熟悉python环境的Windows用户可以下载[Release](https://github.com/AcademicAgentsStudio/releases)中发布的一键运行脚本安装无本地模型的版本。脚本贡献来源：[oobabooga](https://github.com/oobabooga/one-click-installers)。
 
-2. 使用第三方API、Azure等、文心一言、星火等，见[Wiki页面](https://github.com/AIOAGI/AcademicAgentsStudio/wiki/项目配置说明)
+2. 使用第三方API、Azure等、文心一言、星火等，见[Wiki页面](https://github.com/AcademicAgentsStudio/wiki/项目配置说明)
 
 3. 云服务器远程部署避坑指南。
-请访问[云服务器远程部署wiki](https://github.com/AIOAGI/AcademicAgentsStudio/wiki/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97)
+请访问[云服务器远程部署wiki](https://github.com/AcademicAgentsStudio/wiki/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9C%E7%A8%8B%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97)
 
 4. 在其他平台部署&二级网址部署
-    - 使用Sealos[一键部署](https://github.com/AIOAGI/AcademicAgentsStudio/issues/993)。
+    - 使用Sealos[一键部署](https://github.com/AcademicAgentsStudio/issues/993)。
     - 使用WSL2（Windows Subsystem for Linux 子系统）。请访问[部署wiki-2](https://github.com/binary-husky/gpt_academic/wiki/%E4%BD%BF%E7%94%A8WSL2%EF%BC%88Windows-Subsystem-for-Linux-%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%89%E9%83%A8%E7%BD%B2)
     - 如何在二级网址（如`http://localhost/subpath`）下运行。请访问[FastAPI运行说明](docs/WithFastapi.md)
 
@@ -331,7 +331,7 @@ P.S. 如果需要依赖Latex的插件功能，请见Wiki。另外，您也可以
 ### II：自定义函数插件
 编写强大的函数插件来执行任何你想得到的和想不到的任务。
 本项目的插件编写、调试难度很低，只要您具备一定的python基础知识，就可以仿照我们提供的模板实现自己的插件功能。
-详情请参考[函数插件指南](https://github.com/AIOAGI/AcademicAgentsStudio/wiki/%E5%87%BD%E6%95%B0%E6%8F%92%E4%BB%B6%E6%8C%87%E5%8D%97)。
+详情请参考[函数插件指南](https://github.com/AcademicAgentsStudio/wiki/%E5%87%BD%E6%95%B0%E6%8F%92%E4%BB%B6%E6%8C%87%E5%8D%97)。
 
 
 
@@ -495,7 +495,7 @@ https://github.com/fghrsh/live2d_demo
 ### 💌 其他联系方式
 
 - 📧 **邮箱**：academicagents@aioagi.tech
-- 🐙 **GitHub Issues**：[提交问题和建议](https://github.com/AIOAGI/AcademicAgentsStudio/issues)
+- 🐙 **GitHub Issues**：[提交问题和建议](https://github.com/AcademicAgentsStudio/issues)
 - 📝 **文档中心**：[在线文档](https://docs.academicagents.org)
 
 ---
@@ -505,7 +505,7 @@ https://github.com/fghrsh/live2d_demo
 感谢以下优秀开源项目的贡献，本项目在开发过程中参考和借鉴了它们的设计理念：
 
 ### 核心基础
-- [GPT Academic](https://github.com/AIOAGI/AcademicAgentsStudio) - 本项目的主要基础框架
+- [GPT Academic](https://github.com/AcademicAgentsStudio) - 本项目的主要基础框架
 
 ### 技术组件
 - [Gradio](https://github.com/gradio-app/gradio) - Web界面框架
