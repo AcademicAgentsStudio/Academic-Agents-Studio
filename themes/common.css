@@ -449,7 +449,9 @@
     transition: all 0.2s ease !important;
     position: relative;
     overflow: hidden;
-    flex-grow: 1;
+    flex: 1 1 auto;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
 }
 
 #elem_submit_visible:hover {
@@ -485,16 +487,21 @@
 #gpt-submit-dropdown .options,
 #gpt-submit-dropdown .dropdown-options,
 #gpt-submit-dropdown ul {
-    z-index: 999 !important;
-    position: relative;
+    z-index: 9999 !important;
+    position: fixed !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(64, 224, 255, 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Gradio下拉菜单的通用z-index修复 */
 .gr-dropdown .options,
 .gr-dropdown .svelte-1y5xaxi,
 .svelte-1y5xaxi {
-    z-index: 999 !important;
-    position: relative !important;
+    z-index: 9999 !important;
+    position: fixed !important;
 }
 
 /* 更全面的下拉菜单z-index修复 */
@@ -506,14 +513,32 @@
 .dropdown-content,
 .svelte-1ks7q5x,
 .svelte-aqlk7e {
-    z-index: 999 !important;
+    z-index: 9999 !important;
 }
 
 /* 确保下拉菜单容器有正确的层级 */
 .dropdown-container,
 .options-container {
-    z-index: 999 !important;
-    position: relative !important;
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+/* 修复下拉菜单选项的样式 */
+#gpt-submit-dropdown ul.options li {
+    padding: 8px 16px !important;
+    color: #e2e8f0 !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(64, 224, 255, 0.1) !important;
+    transition: all 0.2s ease !important;
+}
+
+#gpt-submit-dropdown ul.options li:hover {
+    background: rgba(64, 224, 255, 0.1) !important;
+    color: #40e0ff !important;
+}
+
+#gpt-submit-dropdown ul.options li:last-child {
+    border-bottom: none !important;
 }
 
 #gpt-submit-dropdown input {

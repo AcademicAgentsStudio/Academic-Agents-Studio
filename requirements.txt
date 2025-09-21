@@ -1,4 +1,4 @@
-https://public.agent-matrix.com/publish/gradio-3.32.15-py3-none-any.whl
+./docs/gradio-3.32.15-py3-none-any.whl
 fastapi==0.110
 gradio-client==0.8
 pypdf2==2.12.1
@@ -45,4 +45,11 @@ llama-parse==0.4.9
 mdit-py-plugins>=0.3.3
 linkify-it-py==2.0.3
 
-altair==4.2.2
+aiofiles
+altair
+ffmpy
+pydub
+matplotlib
+uvicorn
+orjson
+semantic_version

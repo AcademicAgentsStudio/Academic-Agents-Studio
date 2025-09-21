@@ -304,7 +304,7 @@ P.S. 如果需要依赖Latex的插件功能，请见Wiki。另外，您也可以
 
 4. 在其他平台部署&二级网址部署
     - 使用Sealos[一键部署](https://github.com/AcademicAgentsStudio/issues/993)。
-    - 使用WSL2（Windows Subsystem for Linux 子系统）。请访问[部署wiki-2](https://github.com/binary-husky/gpt_academic/wiki/%E4%BD%BF%E7%94%A8WSL2%EF%BC%88Windows-Subsystem-for-Linux-%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%89%E9%83%A8%E7%BD%B2)
+    - 使用WSL2（Windows Subsystem for Linux 子系统）。请访问[部署wiki-2](https://github.com/AcademicAgentsStudio/wiki/%E4%BD%BF%E7%94%A8WSL2%EF%BC%88Windows-Subsystem-for-Linux-%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%89%E9%83%A8%E7%BD%B2)
     - 如何在二级网址（如`http://localhost/subpath`）下运行。请访问[FastAPI运行说明](docs/WithFastapi.md)
 
 
@@ -504,8 +504,8 @@ https://github.com/fghrsh/live2d_demo
 
 感谢以下优秀开源项目的贡献，本项目在开发过程中参考和借鉴了它们的设计理念：
 
-### 核心基础
-- [GPT Academic](https://github.com/AcademicAgentsStudio) - 本项目的主要基础框架
+### 基础框架
+- [GPT Academic](https://github.com/binary-husky/gpt_academic) - 本项目的主要基础框架
 
 ### 技术组件
 - [Gradio](https://github.com/gradio-app/gradio) - Web界面框架

@@ -1,10 +1,10 @@
 import os; os.environ['no_proxy'] = '*' # 避免代理网络产生意外污染
 
 help_menu_description = \
-"""Github源代码开源和更新[地址🚀](https://github.com/binary-husky/gpt_academic),
-感谢热情的[开发者们❤️](https://github.com/binary-husky/gpt_academic/graphs/contributors).
-</br></br>常见问题请查阅[项目Wiki](https://github.com/binary-husky/gpt_academic/wiki),
-如遇到Bug请前往[Bug反馈](https://github.com/binary-husky/gpt_academic/issues).
+"""Github源代码开源和更新[地址🚀](https://github.com/AcademicAgentsStudio),
+感谢热情的[开发者们❤️](https://github.com/AcademicAgentsStudio/graphs/contributors).
+</br></br>常见问题请查阅[项目Wiki](https://github.com/AcademicAgentsStudio/wiki),
+如遇到Bug请前往[Bug反馈](https://github.com/AcademicAgentsStudio/issues).
 </br></br>普通对话使用说明: 1. 输入问题; 2. 点击提交
 </br></br>基础功能区使用说明: 1. 输入文本; 2. 点击任意基础功能区按钮
 </br></br>函数插件区使用说明: 1. 输入路径/问题, 或者上传文件; 2. 点击任意函数插件区按钮
@@ -34,8 +34,8 @@ def encode_plugin_info(k, plugin)->str:
 
 def main():
     import gradio as gr
-    if gr.__version__ not in ['3.32.15']:
-        raise ModuleNotFoundError("使用项目内置Gradio获取最优体验! 请运行 `pip install -r requirements.txt` 指令安装内置Gradio及其他依赖, 详情信息见requirements.txt.")
+    # if gr.__version__ not in ['1.0.0']:
+    #     raise ModuleNotFoundError("使用项目内置Gradio获取最优体验! 请运行 `pip install -r requirements.txt` 指令安装内置Gradio及其他依赖, 详情信息见requirements.txt.")
 
     # 一些基础工具
     from toolbox import format_io, find_free_port, on_file_uploaded, on_report_generated, get_conf, ArgsGeneralWrapper, DummyWith
@@ -66,10 +66,10 @@ def main():
             <div class="header-content">
                 <h1 class="main-title">
                     <div class="title-glow"></div>
-                    <span class="title-icon">🚀</span>
+                    <span class="title-icon"><img src="file=docs/logo.png" width="100" /></span>
                     <span class="title-text">
-                        <span class="text-gradient">Academic</span>
-                        <span class="text-accent">Agents</span>
+                        <span class="text-gradient">Academic Agents</span>
+                        <span class="text-accent">Studio</span>
                     </span>
                     <span class="title-version">
                         <div class="version-chip">{get_current_version()}</div>

@@ -1514,7 +1514,14 @@ async function run_multiplex_shift(multiplex_sel) {
     if (multiplex_sel === "常规对话") {
         key = "提交";
     } else {
-        key = "提交 (" + multiplex_sel + ")";
+        // 根据选择显示不同的按钮文字，但保持长度合理
+        const shortNames = {
+            "查互联网后回答": "网搜提交",
+            "多模型对话": "多模提交",
+            "智能召回 RAG": "RAG提交",
+            "多媒体查询": "媒体提交"
+        };
+        key = shortNames[multiplex_sel] || "提交";
     }
     push_data_to_gradio_component({
         value: key,
