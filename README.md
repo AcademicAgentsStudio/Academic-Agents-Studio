@@ -4,7 +4,7 @@
 
 <div align="center">
 
-<img src="./docs/logo.png" width="120" />
+<img src="./docs/images/logo.png" width="120" />
 
 # Academic Agents Studio
 
@@ -72,6 +72,10 @@
 | | 智能交互 | 多行输入、文件拖拽、快捷键提示、状态反馈 |
 | 🛠️ **扩展性** | 插件系统 | 丰富的插件库和自定义插件支持 |
 | | 主题定制 | 多种界面主题和个性化设置 |
+
+
+<img src="./docs/images/home.png" width="700" >
+
 
 </div>
 
@@ -470,12 +474,12 @@ https://github.com/fghrsh/live2d_demo
 <table>
 <tr>
 <td align="center">
-<img src="./docs/QQ_group.png" width="200" alt="QQ群二维码"/><br>
+<img src="./docs/images/QQ_group.png" width="200" alt="QQ群二维码"/><br>
 <strong>🐧 QQ交流群</strong><br>
 <em>Academic Agents学术智能体交流群</em>
 </td>
 <td align="center">
-<img src="./docs/Wechat_group.png" width="200" alt="微信群二维码"/><br>
+<img src="./docs/images/Wechat_group.png" width="200" alt="微信群二维码"/><br>
 <strong>💬 微信交流群</strong><br>
 <em>Academic Agents学术智能体交流群</em>
 </td>
