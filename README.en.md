@@ -131,14 +131,30 @@ Inherits basic component tools from the <a href="https://github.com/binary-husky
 ### Transparent Academic Agent Execution Process:
 Academic Agents Studio provides complete academic agent interaction flow visualization, allowing users to clearly understand agent processing steps:
 
+
+https://github.com/user-attachments/assets/00e4f96d-2e48-4a51-8cba-413cc33c8306
+
+
 ### **User Input Parsing**:
 Intent recognition, task decomposition, MCP service parsing, tool matching.
+
+
+https://github.com/user-attachments/assets/cbd06df1-87ae-4551-af86-a51551fd04be
+
 
 ### **Tool Calling Process**:
 Real-time display of called tools and services, showing tool execution status and progress, complete request and response information.
 
+
+https://github.com/user-attachments/assets/16f0166c-a86e-4e4f-ad34-91a32212b056
+
+
 ### **Result Processing & Integration**:
 Intelligent integration of tool results, formatting and visualization processing, final result generation and display.
+
+
+https://github.com/user-attachments/assets/18799679-b8fd-40ab-8560-dd84377646a0
+
 
 </div>
 
