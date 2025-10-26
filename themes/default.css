@@ -303,3 +303,195 @@
 .dark .codehilite .vi { color: #89DDFF } /* Name.Variable.Instance */
 .dark .codehilite .vm { color: #82AAFF } /* Name.Variable.Magic */
 .dark .codehilite .il { color: #F78C6C } /* Literal.Number.Integer.Long */
+
+/* ============= 新版科技感学术智能体按钮样式 ============= */
+/* MCP按钮容器 */
+#mcp-button-row {
+    margin-top: 16px !important;
+    margin-bottom: 12px !important;
+    gap: 0 !important;
+    align-items: center !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+}
+
+/* MCP主按钮 - 现代科技感设计 */
+#mcp_toggle_btn {
+    background: linear-gradient(135deg,
+        rgba(16, 185, 129, 0.95),
+        rgba(5, 150, 105, 0.95),
+        rgba(4, 120, 87, 0.95)) !important;
+    border: 2px solid rgba(16, 185, 129, 0.3) !important;
+    border-radius: 16px !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    padding: 16px 24px !important;
+    min-height: 56px !important;
+    height: 56px !important;
+    width: 100% !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    box-shadow:
+        0 8px 32px rgba(16, 185, 129, 0.2),
+        0 4px 16px rgba(16, 185, 129, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    letter-spacing: 0.8px !important;
+    backdrop-filter: blur(20px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+}
+
+/* 按钮内的状态指示器 - 集成设计 */
+#mcp_toggle_btn::after {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 20px !important;
+    padding: 4px 12px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    backdrop-filter: blur(10px) !important;
+    min-width: 70px !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 悬停效果 */
+#mcp_toggle_btn:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow:
+        0 16px 64px rgba(16, 185, 129, 0.3),
+        0 8px 32px rgba(16, 185, 129, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    border-color: rgba(16, 185, 129, 0.6) !important;
+}
+
+#mcp_toggle_btn.mcp-enabled:hover {
+    box-shadow:
+        0 20px 80px rgba(16, 185, 129, 0.5),
+        0 10px 40px rgba(34, 197, 94, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 激活效果 */
+#mcp_toggle_btn:active {
+    transform: translateY(-1px) scale(0.98) !important;
+    transition: all 0.15s ease !important;
+}
+
+/* 扫光动画效果 */
+#mcp_toggle_btn::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent) !important;
+    transition: left 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+    border-radius: 16px !important;
+}
+
+#mcp_toggle_btn:hover::before {
+    left: 100% !important;
+}
+
+/* 状态脉冲动画 */
+@keyframes mcp-status-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.35);
+    }
+}
+
+/* 波纹效果动画 */
+@keyframes mcp-ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+/* 暗色主题适配 */
+.dark #mcp_toggle_btn {
+    background: linear-gradient(135deg,
+        rgba(6, 182, 212, 0.95),
+        rgba(8, 145, 178, 0.95),
+        rgba(14, 116, 144, 0.95)) !important;
+    border-color: rgba(6, 182, 212, 0.4) !important;
+    box-shadow:
+        0 8px 32px rgba(6, 182, 212, 0.25),
+        0 4px 16px rgba(6, 182, 212, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark #mcp_toggle_btn.mcp-enabled {
+    background: linear-gradient(135deg,
+        rgba(6, 182, 212, 1),
+        rgba(8, 145, 178, 1),
+        rgba(34, 211, 238, 1)) !important;
+    border-color: rgba(34, 211, 238, 0.6) !important;
+    box-shadow:
+        0 12px 48px rgba(6, 182, 212, 0.4),
+        0 6px 24px rgba(34, 211, 238, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark #mcp_toggle_btn:hover {
+    box-shadow:
+        0 16px 64px rgba(6, 182, 212, 0.35),
+        0 8px 32px rgba(6, 182, 212, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(6, 182, 212, 0.7) !important;
+}
+
+.dark #mcp_toggle_btn.mcp-enabled:hover {
+    box-shadow:
+        0 20px 80px rgba(6, 182, 212, 0.5),
+        0 10px 40px rgba(34, 211, 238, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    #mcp_toggle_btn {
+        font-size: 14px !important;
+        padding: 14px 20px !important;
+        min-height: 48px !important;
+        height: 48px !important;
+        border-radius: 12px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    #mcp_toggle_btn::after {
+        font-size: 10px !important;
+        padding: 3px 8px !important;
+        min-width: 60px !important;
+        right: 12px !important;
+    }
+}
+
+/* ============= 新版科技感学术智能体按钮样式结束 ============= */

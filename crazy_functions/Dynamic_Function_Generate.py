@@ -126,7 +126,7 @@ def for_immediate_show_off_when_possible(file_type, fp, chatbot):
 
 
 def have_any_recent_upload_files(chatbot):
-    _5min = 5 * 60
+    _5min = 15 * 60
     if not chatbot: return False    # chatbot is None
     most_recent_uploaded = chatbot._cookies.get("most_recent_uploaded", None)
     if not most_recent_uploaded: return False   # most_recent_uploaded is None

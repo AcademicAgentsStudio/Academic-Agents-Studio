@@ -24,7 +24,7 @@ class PluginMultiprocessManager:
         self.use_docker = get_conf("AUTOGEN_USE_DOCKER")
         self.last_user_input = ""
         # create a thread to monitor self.heartbeat, terminate the instance if no heartbeat for a long time
-        timeout_seconds = 5 * 60
+        timeout_seconds = 15 * 60
         self.heartbeat_watchdog = WatchDog(timeout=timeout_seconds, bark_fn=self.terminate, interval=5)
         self.heartbeat_watchdog.begin_watch()
 

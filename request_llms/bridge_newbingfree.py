@@ -230,7 +230,7 @@ def predict_no_ui_long_connection(
     for i in range(len(history) // 2):
         history_feedin.append([history[2 * i], history[2 * i + 1]])
 
-    watch_dog_patience = 5  # 看门狗 (watchdog) 的耐心, 设置5秒即可
+    watch_dog_patience = 15  # 看门狗 (watchdog) 的耐心, 设置5秒即可
     response = ""
     if len(observe_window) >= 1:
         observe_window[0] = "[Local Message] 等待NewBing响应中 ..."

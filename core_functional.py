@@ -143,6 +143,16 @@ def get_core_functions():
                         r"Items need to be transformed:" + "\n\n",
             "Visible":  False,
             "Suffix":   r"",
+        },
+
+        "学术智能体（Academic Agents）": {
+            "Prefix":   "",
+            "Suffix":   "",
+            "Color":    "primary",
+            "Function": "mcp_toggle",
+            "PreProcess": None,
+            "Visible": False,  # 隐藏基础功能区的MCP按钮，改用输入区的MCP按钮
+            "Info": "启用/禁用学术智能体（Academic Agents）功能，支持外部工具调用"
         }
     }
 

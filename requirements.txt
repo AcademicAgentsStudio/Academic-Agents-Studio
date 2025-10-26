@@ -1,12 +1,13 @@
 ./docs/gradio-3.32.15-py3-none-any.whl
+qwen-agent==0.0.29
 fastapi==0.110
 gradio-client==0.8
 pypdf2==2.12.1
-httpx<=0.25.2
+httpx
 zhipuai==2.0.1
 tiktoken>=0.3.3
 requests[socks]
-pydantic==2.9.2
+pydantic
 protobuf==3.20
 transformers>=4.27.1,<4.42
 scipdf_parser>=0.52
@@ -53,3 +54,5 @@ matplotlib
 uvicorn
 orjson
 semantic_version
+dotenv
+mcp==1.14.1

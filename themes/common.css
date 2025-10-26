@@ -678,7 +678,7 @@
 
 /* input btns: clear, reset, stop */
 #input-panel button {
-    min-width: min(80px, 100%);
+    min-width: 85%;
 }
 
 /* input btns: clear, reset, stop */

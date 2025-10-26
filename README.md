@@ -52,8 +52,6 @@
 - 🚀 **部署简单**：支持本地部署、Docker部署和云端部署
 - ⭐ **在线体验**：在线免费体验<a href="https://agents.aiearth.vip">内测版</a>，支持最新研发功能特性，🙂支持GPT、Claude等系列基础模型，欢迎反馈！
 
-  一个基于 Qwen-Agent 框架和 MCP (Model Context Protocol) 协议的现代化学术研究智能体平台，支持多种学术任务的自动化处理和智能协作。
-
 ### 🏗️ 技术架构
 <p align="center">
     <img src="https://qianwen-res.oss-accelerate-overseas.aliyuncs.com/logo_qwen_agent.png" width="400"/>
@@ -136,31 +134,14 @@
 ### 透明化学术智能体执行过程：
 Academic Agents Studio 提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
 
-
-https://github.com/user-attachments/assets/7a8ce3fb-a6a4-406c-a6ec-4a89eec68a40
-
-
-
 ### **用户输入解析**：
 意图识别、任务分解、MCP服务解析、工具匹配。
-
-
-https://github.com/user-attachments/assets/5272fce3-50db-4564-b56d-e8da558e6c2e
-
 
 ### **工具调用过程**：
 实时显示调用的工具和服务、展示工具执行状态和进度、完整的请求和响应信息。
 
-
-https://github.com/user-attachments/assets/a756784e-4ce8-4142-80d0-e3c59b2b3c08
-
-
 ### **结果处理和整合**：
 工具结果的智能整合、格式化和可视化处理、最终结果生成和展示
-
-
-https://github.com/user-attachments/assets/6f1a844f-ca9a-4420-9b7d-2e0d3c1a6791
-
 
 
 </div>

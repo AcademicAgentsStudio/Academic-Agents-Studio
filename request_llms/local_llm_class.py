@@ -252,7 +252,7 @@ def get_local_llm_predict_fns(LLMSingletonClass, model_name, history_format='cla
                     else:
                         history_feedin[-1]['content'] = what_gpt_answer['content']
 
-        watch_dog_patience = 5  # 看门狗 (watchdog) 的耐心, 设置5秒即可
+        watch_dog_patience = 15  # 看门狗 (watchdog) 的耐心, 设置5秒即可
         response = ""
         for response in _llm_handle.stream_chat(query=inputs, history=history_feedin, max_length=llm_kwargs['max_length'], top_p=llm_kwargs['top_p'], temperature=llm_kwargs['temperature']):
             if len(observe_window) >= 1:

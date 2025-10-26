@@ -8,7 +8,7 @@
     具备多线程调用能力的函数：在函数插件中被调用，灵活而简洁
     2. predict_no_ui_long_connection(...)
 """
-import tiktoken, copy, re
+import tiktoken, copy
 from loguru import logger
 from functools import lru_cache
 from concurrent.futures import ThreadPoolExecutor
@@ -335,6 +335,36 @@ model_info = {
         "token_cnt": get_token_num_gpt4,
     },
 
+    "gpt-5-mini": {
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+    },
+
+    "gpt-5": {
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+    },
+
+    "gpt-5-chat": {
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+    },
+
     "o3":{
         "fn_with_ui": chatgpt_ui,
         "fn_without_ui": chatgpt_noui,
@@ -584,6 +614,24 @@ model_info = {
         "tokenizer": tokenizer_gpt35,
         "token_cnt": get_token_num_gpt35,
     },
+    "gemini-2.0-pro-exp": {
+        "fn_with_ui": genai_ui,
+        "fn_without_ui": genai_noui,
+        "endpoint": gemini_endpoint,
+        "has_multimodal_capacity": True,
+        "max_token": 1024 * 204800,
+        "tokenizer": tokenizer_gpt35,
+        "token_cnt": get_token_num_gpt35,
+    },
+    "gemini-2.5-pro": {
+        "fn_with_ui": genai_ui,
+        "fn_without_ui": genai_noui,
+        "endpoint": gemini_endpoint,
+        "has_multimodal_capacity": True,
+        "max_token": 1024 * 204800,
+        "tokenizer": tokenizer_gpt35,
+        "token_cnt": get_token_num_gpt35,
+    },
 
     # cohere
     "cohere-command-r-plus": {
@@ -645,7 +693,19 @@ for model in AVAIL_LLM_MODELS:
 
 # -=-=-=-=-=-=- 以下部分是新加入的模型，可能附带额外依赖 -=-=-=-=-=-=-
 # claude家族
-claude_models = ["claude-instant-1.2","claude-2.0","claude-2.1","claude-3-haiku-20240307","claude-3-sonnet-20240229","claude-3-opus-20240229","claude-3-5-sonnet-20240620"]
+claude_models = ["claude-instant-1.2",
+                 "claude-2.0",
+                 "claude-2.1",
+                 "claude-3-haiku-20240307",
+                 "claude-3-sonnet-20240229",
+                 "claude-3-opus-20240229",
+                 "claude-3-5-sonnet-20240620",
+                 "claude-3-7-sonnet",
+                 "claude-opus-4",
+                 "claude-opus-4-1",
+                 "claude-sonnet-4",
+                 "claude-sonnet-4-5",
+                 "claude-sonnet-4-5-thinking"]
 if any(item in claude_models for item in AVAIL_LLM_MODELS):
     from .bridge_claude import predict_no_ui_long_connection as claude_noui
     from .bridge_claude import predict as claude_ui
@@ -711,6 +771,66 @@ if any(item in claude_models for item in AVAIL_LLM_MODELS):
     })
     model_info.update({
         "claude-3-5-sonnet-20240620": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-3-7-sonnet": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-opus-4": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-opus-4-1": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-sonnet-4": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-sonnet-4-5": {
+            "fn_with_ui": claude_ui,
+            "fn_without_ui": claude_noui,
+            "endpoint": claude_endpoint,
+            "max_token": 200000,
+            "tokenizer": tokenizer_gpt35,
+            "token_cnt": get_token_num_gpt35,
+        },
+    })
+    model_info.update({
+        "claude-sonnet-4-5-thinking": {
             "fn_with_ui": claude_ui,
             "fn_without_ui": claude_noui,
             "endpoint": claude_endpoint,
@@ -1291,19 +1411,19 @@ for model in [m for m in AVAIL_LLM_MODELS if m.startswith("volcengine-")]:
     if original_model_info is not None and original_model_info.get(attribute, None) is not None: this_model_info.update({attribute: original_model_info.get(attribute, None)})
     model_info.update({model: this_model_info})
 
-# -=-=-=-=-=-=- one-api 对齐支持 -=-=-=-=-=-=-
-for model in [m for m in AVAIL_LLM_MODELS if m.startswith("one-api-")]:
-    # 为了更灵活地接入one-api多模型管理界面，设计了此接口，例子：AVAIL_LLM_MODELS = ["one-api-mixtral-8x7b(max_token=6666)"]
+# -=-=-=-=-=-=- aioagi 对齐支持 -=-=-=-=-=-=-
+for model in [m for m in AVAIL_LLM_MODELS if m.startswith("aioagi-")]:
+    # 为了更灵活地接入one-api多模型管理界面，设计了此接口，例子：AVAIL_LLM_MODELS = ["aioagi-mixtral-8x7b(max_token=6666)"]
     # 其中
-    #   "one-api-"          是前缀（必要）
+    #   "aioagi-"          是前缀（必要）
     #   "mixtral-8x7b"      是模型名（必要）
     #   "(max_token=6666)"  是配置（非必要）
     try:
         origin_model_name, max_token_tmp = read_one_api_model_name(model)
         # 如果是已知模型，则尝试获取其信息
-        original_model_info = model_info.get(origin_model_name.replace("one-api-", "", 1), None)
+        original_model_info = model_info.get(origin_model_name.replace("aioagi-", "", 1), None)
     except:
-        logger.error(f"one-api模型 {model} 的 max_token 配置不是整数，请检查配置文件。")
+        logger.error(f"aioagi模型 {model} 的 max_token 配置不是整数，请检查配置文件。")
         continue
     this_model_info = {
         "fn_with_ui": chatgpt_ui,
@@ -1555,7 +1675,170 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot,
         ):
     """
 
+    # 处理智能体MCP功能
+    if additional_fn == "学术智能体（Academic Agents）":
+        try:
+            from mcp_servers.mcp_manager import mcp_manager
+            from toolbox import update_ui
+
+            # 切换MCP状态（现在基于用户会话）
+            current_status = mcp_manager.is_enabled(chatbot)
+            new_status = not current_status
+            if new_status and inputs=='':
+                welcome = f"🤖欢迎使用学术智能体（Academic Agents）"
+                chatbot.append([welcome, f"🤖 正在为您加载学术智能体（Academic Agents）..."])
+                yield from update_ui(chatbot=chatbot, history=history)
+            success = mcp_manager.enable_mcp(chatbot, new_status)
+
+            if not success:
+                chatbot.append([inputs, "❌ 无法操作学术智能体（Academic Agents）功能，请重试/联系管理员(QQ群 1030022463 | 微信群 搜索AIOAGI)。"])
+                yield from update_ui(chatbot=chatbot, history=history)
+                return
+
+            if new_status:
+                import sys
+                import os
+
+                try:
+                    from mcp_servers.static_utils import load_mcp_server_data, format_server_message, get_mcp_servers_for_config
+                    mcp_data = load_mcp_server_data()
+
+                    if inputs == '':
+                        inputs=None
+                        status_msg = "\n\n" + format_server_message(mcp_data)
+                    else:
+                        status_msg = format_server_message(mcp_data)
+
+                    mcp_servers = get_mcp_servers_for_config()
+
+                except Exception as e:
+                    status_msg = "⚠️ **学术智能体（Academic Agents）服务加载异常**\n\n"
+                    status_msg += f"错误详情: {str(e)}\n\n"
+                    status_msg += "**可能的解决方案**:\n"
+                    status_msg += "• 确保 `mcp_servers.json` 文件存在于 `mcp_servers` 文件夹中\n"
+                    status_msg += "• 运行 MCP 守护进程生成服务器状态文件\n"
+                    status_msg += "• 检查文件格式是否正确\n"
+                    status_msg += "• 联系技术支持 (QQ群 1030022463 | 微信群 搜索AIOAGI)"
+                    mcp_servers = []
+
+                # 添加使用说明和服务状态
+                if mcp_servers:
+                    status_msg += "\n\n**🚀 使用说明**："
+                    status_msg += "\n\n• 在下方输入框中描述您的需求，智能体将自动选择合适的工具"
+                    status_msg += "\n\n• 支持学术搜索、数据可视化、地图查询等多种功能"
+                    status_msg += "\n\n• **隐私保护**: 会话数据仅在当前session有效"
+                else:
+                    status_msg += "\n\n❌ **当前无可用服务**"
+                    status_msg += "\n• 请等待服务恢复或联系管理员"
+
+                status_msg += "\n\n🌟 **欢迎加入Academic Agents Studio** 社区: QQ群 1030022463 | 微信群 搜索AIOAGI"
+
+                chatbot.append([inputs, status_msg])
+                yield from update_ui(chatbot=chatbot, history=history)
+            else:
+                inputs = None
+                chatbot.append([inputs, "⭕ 学术智能体（Academic Agents）功能已禁用。您的个人设置已清除。"])
+                yield from update_ui(chatbot=chatbot, history=history)
+            return
+        except Exception as e:
+            from toolbox import update_ui
+            chatbot.append([inputs, f"❌ 学术智能体（Academic Agents）功能操作失败: {str(e)}"])
+            yield from update_ui(chatbot=chatbot, history=history)
+            return
+
     inputs = apply_gpt_academic_string_mask(inputs, mode="show_llm")
+
+    try:
+        from mcp_servers.mcp_manager import mcp_manager
+        if mcp_manager.is_enabled(chatbot) and not additional_fn:
+            from toolbox import update_ui
+            from mcp_servers.static_utils import clean_html_content
+
+            # 使用智能体处理对话
+            response_text = ""
+            chatbot.append([inputs, ""])
+
+            # 获取可用服务器配置
+            from mcp_servers.static_utils import get_mcp_servers_for_config
+            available_mcp_servers = get_mcp_servers_for_config()
+
+            import time
+            from toolbox import update_ui,log_chat
+            import threading
+
+            start_time = time.time()
+
+            bot = None
+            creation_complete = False
+            creation_error = None
+            max_wait_time = 30  # 最多等待30秒
+
+            def create_agent():
+                nonlocal bot, creation_complete, creation_error
+                try:
+                    bot = mcp_manager.create_agent_bot(chatbot,available_mcp_servers)
+                    creation_complete = True
+                except Exception as e:
+                    creation_error = e
+                    creation_complete = True
+
+            creation_thread = threading.Thread(target=create_agent, daemon=True)
+            creation_thread.start()
+
+            while not creation_complete and (time.time() - start_time) < max_wait_time:
+                elapsed = int(time.time() - start_time)
+
+                progress_msg = f"⏳ 学术智能体（Academic Agents）工作中，请稍候...({elapsed}s)"
+
+                chatbot[-1] = [chatbot[-1][0], progress_msg]
+
+                for ui_update in update_ui(chatbot=chatbot, history=history):
+                    yield ui_update
+
+                wait_start = time.time()
+                while (time.time() - wait_start) < 1 and not creation_complete:
+                    time.sleep(0.5)  # 每0.5秒检查一次是否完成
+
+            # 显示超时信息
+            if not creation_complete:
+                chatbot[-1] = [inputs, f"很抱歉，⏳学术智能体（Academic Agents）服务响应超时，请重试/联系管理员(QQ群 1030022463 | 微信群 搜索AIOAGI)。"]
+                yield from update_ui(chatbot=chatbot, history=history)  # 刷新界面
+                raise Exception("智能体创建超时，请重试")
+
+            if creation_error:
+                raise creation_error
+
+            # 处理历史消息
+            mcp_history = []
+            for i, chat_pair in enumerate(chatbot):
+                if len(chat_pair) >= 2: #and chat_pair[0] is not None:
+                    user_input = chat_pair[0]
+                    assistant_response = chat_pair[1]
+                    clean_user_input = clean_html_content(user_input)
+                    clean_assistant_response = clean_html_content(assistant_response)
+                    mcp_history.append({"role": "user", "content": clean_user_input})
+                    mcp_history.append({"role": "assistant", "content": clean_assistant_response})
+
+            chatbot.append([inputs, None])
+            for chunk in mcp_manager.chat_with_mcp(inputs, mcp_history, chatbot=chatbot, bot=bot):
+                response_text = chunk
+                if response_text.startswith(("🤖", "🖥️", "🔍", "⏳")):
+                    chatbot[-1] = [None, response_text]
+                elif response_text.startswith("🛠️"):
+                    chatbot.append([None, response_text])
+                    chatbot.append([None, None])
+                elif response_text.startswith("<"):
+                    continue
+                else:
+                    chatbot[-1] = [None, response_text]
+                yield from update_ui(chatbot=chatbot, history=history)
+            chatbot.append([inputs, response_text])
+            history.append([inputs, response_text])
+            return
+
+    except Exception as e:
+        logger.error(f"智能体处理失败: {e}")
+        # 如果智能体处理失败，继续使用常规模型处理
 
     if llm_kwargs['llm_model'] not in model_info:
         from toolbox import update_ui

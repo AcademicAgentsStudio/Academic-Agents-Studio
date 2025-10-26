@@ -98,7 +98,7 @@ def request_gpt_model_in_new_thread_with_ui_alive(
     executor = ThreadPoolExecutor(max_workers=16)
     mutable = ["", time.time(), ""]
     # 看门狗耐心
-    watch_dog_patience = 5
+    watch_dog_patience = 15
     # 请求任务
     def _req_gpt(inputs, history, sys_prompt):
         retry_op = retry_times_at_unknown_error
@@ -140,10 +140,10 @@ def request_gpt_model_in_new_thread_with_ui_alive(
                     mutable[0] += f"[Local Message] 重试中，请稍等 {retry_times_at_unknown_error-retry_op}/{retry_times_at_unknown_error}：\n\n"
                     if ("Rate limit reached" in tb_str) or ("Too Many Requests" in tb_str):
                         time.sleep(30)
-                    time.sleep(5)
+                    time.sleep(15)
                     continue # 返回重试
                 else:
-                    time.sleep(5)
+                    time.sleep(15)
                     return mutable[0] # 放弃
 
     # 提交任务
@@ -240,7 +240,7 @@ def request_gpt_model_multi_threads_with_very_awesome_ui_and_high_efficiency(
     mutable = [["", time.time(), "等待中"] for _ in range(n_frag)]
 
     # 看门狗耐心
-    watch_dog_patience = 5
+    watch_dog_patience = 15
 
     # 子线程任务
     def _req_gpt(index, inputs, history, sys_prompt):
@@ -289,7 +289,7 @@ def request_gpt_model_multi_threads_with_very_awesome_ui_and_high_efficiency(
                 if len(mutable[index][0]) > 0: gpt_say += "此线程失败前收到的回答：\n\n" + mutable[index][0]
                 if retry_op > 0:
                     retry_op -= 1
-                    wait = random.randint(5, 20)
+                    wait = random.randint(15, 20)
                     if ("Rate limit reached" in tb_str) or ("Too Many Requests" in tb_str):
                         wait = wait * 3
                         fail_info = "OpenAI绑定信用卡可解除频率限制 "
@@ -304,8 +304,8 @@ def request_gpt_model_multi_threads_with_very_awesome_ui_and_high_efficiency(
                     continue # 返回重试
                 else:
                     mutable[index][2] = "已失败"
-                    wait = 5
-                    time.sleep(5)
+                    wait = 15
+                    time.sleep(15)
                     return gpt_say # 放弃
 
     # 异步任务开始

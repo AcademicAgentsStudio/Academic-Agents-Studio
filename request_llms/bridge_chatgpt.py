@@ -141,7 +141,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
     """
     from request_llms.bridge_all import model_info
 
-    watch_dog_patience = 5 # 看门狗的耐心, 设置5秒即可
+    watch_dog_patience = 1500 # 看门狗的耐心, 设置5秒即可
 
     if model_info[llm_kwargs['llm_model']].get('openai_disable_stream', False): stream = False
     else: stream = True
@@ -185,7 +185,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
                 raise ConnectionAbortedError("正常结束，但显示Token不足，导致输出不完整，请削减单次输入的文本量。")
             else:
                 raise RuntimeError("OpenAI拒绝了请求：" + error_msg)
-        if ('data: [DONE]' in chunk_decoded): break # api2d & one-api 正常完成
+        if ('data: [DONE]' in chunk_decoded): break # api2d & aioagi 正常完成
         # 提前读取一些信息 （用于判断异常）
         if has_choices and not choice_valid:
             # 一些垃圾第三方接口的出现这样的错误
@@ -295,20 +295,68 @@ def predict(inputs:str, llm_kwargs:dict, plugin_kwargs:dict, chatbot:ChatBotWith
     else:
         history.extend([inputs, ""])
 
-    retry = 0
     previous_ui_reflesh_time = 0
     ui_reflesh_min_interval = 0.0
-    while True:
+
+    # 使用线程创建聊天，主线程负责更新进度显示
+    import time
+    import threading
+
+    start_time = time.time()
+
+    response = None
+    creation_complete = False
+    creation_error = None
+    max_wait_time = 600  # 最多等待60秒
+
+    def create_post():
+        nonlocal response, creation_complete, creation_error
         try:
-            # make a POST request to the API endpoint, stream=True
             response = requests.post(endpoint, headers=headers, proxies=proxies,
-                                    json=payload, stream=stream, timeout=TIMEOUT_SECONDS);break
-        except:
-            retry += 1
-            chatbot[-1] = ((chatbot[-1][0], timeout_bot_msg))
-            retry_msg = f"，正在重试 ({retry}/{MAX_RETRY}) ……" if MAX_RETRY > 0 else ""
-            yield from update_ui(chatbot=chatbot, history=history, msg="请求超时"+retry_msg) # 刷新界面
-            if retry > MAX_RETRY: raise TimeoutError
+                                     json=payload, stream=stream, timeout=TIMEOUT_SECONDS)
+            creation_complete = True
+        except Exception as e:
+            print(f"POST失败: {e}")
+            creation_error = e
+            creation_complete = True
+
+    # 启动POST聊天创建线程
+    creation_thread = threading.Thread(target=create_post, daemon=True)
+    creation_thread.start()
+
+    # 主线程每秒更新一次进度显示
+    while not creation_complete and (time.time() - start_time) < max_wait_time:
+        elapsed = int(time.time() - start_time)
+
+        progress_msg = f"⏳ 请稍候...({elapsed}s)"
+
+        chatbot[-1] = [chatbot[-1][0], progress_msg]
+
+        # 更新UI
+        for ui_update in update_ui(chatbot=chatbot, history=history):
+            yield ui_update
+
+        # 等待5秒或直到创建完成
+        wait_start = time.time()
+        while (time.time() - wait_start) < 1 and not creation_complete:
+            time.sleep(0.5)  # 每0.5秒检查一次是否完成
+
+    # 如果创建线程仍在运行且超时，显示超时信息
+    if not creation_complete:
+        print("POST创建超时")
+        progress_msg = f"🤖模型返回超时，请重试/联系管理员维护！"
+        chatbot[-1] = [chatbot[-1][0], progress_msg]
+        for ui_update in update_ui(chatbot=chatbot, history=history):
+            yield ui_update
+        raise Exception("POST创建超时，请重试")
+
+    # 如果创建过程中有错误，抛出异常
+    if creation_error:
+        progress_msg = f"🤖模型返回出错，请重试/联系管理员维护！"
+        chatbot[-1] = [chatbot[-1][0], progress_msg]
+        for ui_update in update_ui(chatbot=chatbot, history=history):
+            yield ui_update
+        raise creation_error
 
     if not stream:
         # 该分支仅适用于不支持stream的o1模型，其他情形一律不适用
@@ -546,8 +594,8 @@ def generate_payload(inputs:str, llm_kwargs:dict, history:list, system_prompt:st
     model = llm_kwargs['llm_model']
     if llm_kwargs['llm_model'].startswith('api2d-'):
         model = llm_kwargs['llm_model'][len('api2d-'):]
-    if llm_kwargs['llm_model'].startswith('one-api-'):
-        model = llm_kwargs['llm_model'][len('one-api-'):]
+    if llm_kwargs['llm_model'].startswith('aioagi-'):
+        model = llm_kwargs['llm_model'][len('aioagi-'):]
         model, _ = read_one_api_model_name(model)
     if llm_kwargs['llm_model'].startswith('vllm-'):
         model = llm_kwargs['llm_model'][len('vllm-'):]

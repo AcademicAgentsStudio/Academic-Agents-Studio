@@ -149,7 +149,7 @@ class BatchDocumentSummarizer:
                     check_timeout()  # 检查全局超时
 
                     # 检查分割过程是否超时（5秒）
-                    if time.time() - split_start_time > 5:
+                    if time.time() - split_start_time > 15:
                         raise TimeoutError("文本分割超时（5秒）")
 
                     paper_fragments = breakdown_text_to_satisfy_token_limit(
@@ -202,7 +202,7 @@ class BatchDocumentSummarizer:
 
         # 配置参数
         self.refresh_interval = 0.2  # UI刷新间隔
-        self.watch_dog_patience = 5  # 看门狗超时时间
+        self.watch_dog_patience = 15  # 看门狗超时时间
         self.max_file_size = 10 * 1024 * 1024  # 10MB限制
         self.max_workers = min(32, len(file_paths))  # 最多32个线程
 
@@ -293,7 +293,7 @@ class BatchDocumentSummarizer:
         from collections import defaultdict
         batch_size = 64  # 每批处理的片段数
         max_retries = 3  # 最大重试次数
-        retry_delay = 5  # 重试延迟（秒）
+        retry_delay = 15  # 重试延迟（秒）
         results = defaultdict(list)
 
         # 按批次处理

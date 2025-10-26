@@ -119,7 +119,7 @@ def start_app(app_block, CONCURRENT_COUNT, AUTHENTICATION, PORT, SSL_KEYFILE, SS
     app_block:gr.Blocks
     app_block.ssl_verify = False
     app_block.auth_message = '请登录'
-    app_block.favicon_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs/logo.png")
+    app_block.favicon_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs/images/logo.png")
     app_block.auth = AUTHENTICATION if len(AUTHENTICATION) != 0 else None
     app_block.blocked_paths = ["config.py", "__pycache__", "config_private.py", "docker-compose.yml", "Dockerfile", f"{PATH_LOGGING}/admin"]
     app_block.dev_mode = False

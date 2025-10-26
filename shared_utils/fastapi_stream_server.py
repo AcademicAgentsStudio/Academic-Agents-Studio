@@ -497,7 +497,7 @@ class MasterMindWebSocketServer(PythonMethod_AsyncConnectionMaintainer_Agentcraf
                     from textwrap import dedent
                     com = get_plugin_default_kwargs()
                     llm_kwargs = com['llm_kwargs']
-                    llm_kwargs['llm_model'] = 'one-api-glm-4-flash'
+                    llm_kwargs['llm_model'] = 'aioagi-glm-4-flash'
                     completion_system_prompt = dedent("""Predict the next input that the user might type.
                     1. Do not repeat the <current_input>. The <future_input> should be a continuation of <current_input>.
                     2. Use same language as the input.

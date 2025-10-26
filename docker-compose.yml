@@ -29,8 +29,8 @@
 ## ===================================================
 version: '3'
 services:
-  gpt_academic_full_capability:
-    image: ghcr.io/binary-husky/gpt_academic_with_all_capacity:master
+  academic_agents_studio_full_capability:
+    image: aioagitech/academic_agents_studio:latest
     environment:
       # 请查阅 `config.py`或者 github wiki 以查看所有的配置信息
       API_KEY:                  '  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                        '
@@ -80,8 +80,8 @@ services:
 ## ===================================================
 version: '3'
 services:
-  gpt_academic_nolocalllms:
-    image: ghcr.io/binary-husky/gpt_academic_nolocal:master # (Auto Built by Dockerfile: docs/GithubAction+NoLocal)
+  academic_agents_studio_nolocalllms:
+    image: aioagitech/academic_agents_studio:latest # (Auto Built by Dockerfile: docs/GithubAction+NoLocal)
     environment:
       # 请查阅 `config.py` 以查看所有的配置信息
       API_KEY:                  '    sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                            '
@@ -108,8 +108,8 @@ services:
 ### ===================================================
 version: '3'
 services:
-  gpt_academic_with_chatglm:
-    image: ghcr.io/binary-husky/gpt_academic_chatglm_moss:master  # (Auto Built by Dockerfile: docs/Dockerfile+ChatGLM)
+  academic_agents_studio_with_chatglm:
+    image: aioagitech/academic_agents_studio:latest  # (Auto Built by Dockerfile: docs/Dockerfile+ChatGLM)
     environment:
       # 请查阅 `config.py` 以查看所有的配置信息
       API_KEY:                  '    sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                            '
@@ -145,8 +145,8 @@ services:
 ### ===================================================
 version: '3'
 services:
-  gpt_academic_with_rwkv:
-    image: ghcr.io/binary-husky/gpt_academic_jittorllms:master
+  academic_agents_studio_with_rwkv:
+    image: aioagitech/academic_agents_studio:latest
     environment:
       # 请查阅 `config.py` 以查看所有的配置信息
       API_KEY:                  '    sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,fkxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  '
@@ -178,9 +178,8 @@ services:
 ## ===================================================
 version: '3'
 services:
-  gpt_academic_with_latex:
-    image: ghcr.io/binary-husky/gpt_academic_with_latex:master  # (Auto Built by Dockerfile: docs/GithubAction+NoLocal+Latex)
-    # 对于ARM64设备，请将以上镜像名称替换为 ghcr.io/binary-husky/gpt_academic_with_latex_arm:master
+  academic_agents_studio_with_latex:
+    image: aioagitech/academic_agents_studio:latest  # (Auto Built by Dockerfile: docs/GithubAction+NoLocal+Latex)
     environment:
       # 请查阅 `config.py` 以查看所有的配置信息
       API_KEY:                  '    sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                              '
@@ -205,8 +204,8 @@ services:
 ## ===================================================
 version: '3'
 services:
-  gpt_academic_with_audio:
-    image: ghcr.io/binary-husky/gpt_academic_audio_assistant:master
+  academic_agents_studio_with_audio:
+    image: aioagitech/academic_agents_studio:latest
     environment:
       # 请查阅 `config.py` 以查看所有的配置信息
       API_KEY:                  '    fk195831-IdP0Pb3W6DCMUIbQwVX6MsSiyxwqybyS                        '

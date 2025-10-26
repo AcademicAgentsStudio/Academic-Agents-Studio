@@ -170,7 +170,7 @@ def get_predict_function(
             用于负责跨越线程传递已经输出的部分，大部分时候仅仅为了fancy的视觉效果，留空即可。observe_window[0]：观测窗。observe_window[1]：看门狗
         """
         from .bridge_all import model_info
-        watch_dog_patience = 5  # 看门狗的耐心，设置5秒不准咬人 (咬的也不是人)
+        watch_dog_patience = 15  # 看门狗的耐心，设置5秒不准咬人 (咬的也不是人)
         if len(APIKEY) == 0:
             raise RuntimeError(f"APIKEY为空,请检查配置文件的{APIKEY}")
         if inputs == "":

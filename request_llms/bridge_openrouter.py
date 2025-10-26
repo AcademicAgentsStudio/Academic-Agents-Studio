@@ -135,7 +135,7 @@ def predict_no_ui_long_connection(inputs:str, llm_kwargs:dict, history:list=[], 
     """
     from request_llms.bridge_all import model_info
 
-    watch_dog_patience = 5 # 看门狗的耐心, 设置5秒即可
+    watch_dog_patience = 15 # 看门狗的耐心, 设置5秒即可
 
     if model_info[llm_kwargs['llm_model']].get('openai_disable_stream', False): stream = False
     else: stream = True
@@ -504,8 +504,8 @@ def generate_payload(inputs:str, llm_kwargs:dict, history:list, system_prompt:st
     model = llm_kwargs['llm_model']
     if llm_kwargs['llm_model'].startswith('api2d-'):
         model = llm_kwargs['llm_model'][len('api2d-'):]
-    if llm_kwargs['llm_model'].startswith('one-api-'):
-        model = llm_kwargs['llm_model'][len('one-api-'):]
+    if llm_kwargs['llm_model'].startswith('aioagi-'):
+        model = llm_kwargs['llm_model'][len('aioagi-'):]
         model, _ = read_one_api_model_name(model)
     if llm_kwargs['llm_model'].startswith('vllm-'):
         model = llm_kwargs['llm_model'][len('vllm-'):]

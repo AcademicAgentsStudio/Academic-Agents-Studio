@@ -91,7 +91,7 @@ class InterviewAssistant(AliyunASR):
         self.commit_after_pause_n_second = 2.0
         self.ready_audio_flagment = None
         self.stop = False
-        self.plugin_wd = WatchDog(timeout=5, bark_fn=self.__del__, msg="程序终止")
+        self.plugin_wd = WatchDog(timeout=15, bark_fn=self.__del__, msg="程序终止")
         self.aut = threading.Thread(target=self.audio_convertion_thread, args=(chatbot._cookies['uuid'],))
         self.aut.daemon = True
         self.aut.start()

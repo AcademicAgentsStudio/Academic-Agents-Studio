@@ -1,0 +1,25 @@
+{
+  "available_servers": {
+    "FreeAcademicWrite": {
+      "name": "学术智能体免费学术写作服务",
+      "url": "https://academicwrite.freemcps.aiearth.vip/sse",
+      "headers": {"Authorization": "Bearer aioagi.tech"},
+      "description": "学术智能体（Academic Agents）是一个专为学术研究和论文写作设计的智能助手平台，为研究人员和学者提供全方位的学术写作支持，集成四大核心功能：学术语料润色支持中文学术文本的语法优化、句式改进和可读性提升；语法错误检查提供英文学术文本的精确语法和拼写校对；智能翻译具备自动语言识别能力，可准确翻译各种语言的学术内容；学术英中互译专门针对学术场景，运用自然语言处理技术和修辞学知识，在英文和中文之间进行高质量的双向翻译。\n",
+      "enabled": true
+    },
+    "FreeWebSearch": {
+        "name": "学术智能体免费网络搜索服务",
+        "url": "https://websearch.freemcps.aiearth.vip/sse",
+        "headers": {"Authorization": "Bearer aioagi.tech"},
+        "description": "搜索判定等多种检索模型及语义理解，串接专业搜索工程框架及各类型实时信息检索工具，提供实时互联网全栈信息检索，提升 LLM 回答准确性及时效性。",
+        "enabled": true
+    },
+    "FreeAcademicChart": {
+        "name": "学术智能体免费学术图表可视化服务",
+        "url": "https://academicchart.freemcps.aiearth.vip/sse",
+        "headers": {"Authorization": "Bearer aioagi.tech"},
+        "description": "支持生成多种类型的图表并返回图表 url，包括：条形图、折线图、饼图、环状图、雷达图、极坐标区域图、散点图、气泡图、径向仪表图、速度表；可定制图表配置，包括：标签、数据和颜色。",
+        "enabled": true
+    }
+  }
+}

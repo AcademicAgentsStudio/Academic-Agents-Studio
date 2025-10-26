@@ -8,10 +8,7 @@
 """
 
 # [step 1-1]>> ( 接入OpenAI模型家族 ) API_KEY = "sk-123456789xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx123456789"。极少数情况下，还需要填写组织（格式如org-123456789abcdefghijklmno的），请向下翻，找 API_ORG 设置项
-API_KEY = "在此处填写APIKEY"    # 可同时填写多个API-KEY，用英文逗号分割，例如API_KEY = "sk-openaikey1,sk-openaikey2,fkxxxx-api2dkey3,azure-apikey4"
-
-# [step 1-2]>> ( 强烈推荐！接入通义家族 & 大模型服务平台百炼 ) 接入通义千问在线大模型，api-key获取地址 https://dashscope.console.aliyun.com/
-DASHSCOPE_API_KEY = "" # 阿里灵积云API_KEY（用于接入qwen-max，dashscope-qwen3-14b，dashscope-deepseek-r1等）
+API_KEY = "sk-xxxxxxxxxxxxx"    # 可同时填写多个API-KEY，用英文逗号分割，例如API_KEY = "sk-openaikey1,sk-openaikey2,fkxxxx-api2dkey3,azure-apikey4"
 
 # [step 1-3]>> ( 接入 deepseek-reasoner, 即 deepseek-r1 ) 深度求索(DeepSeek) API KEY，默认请求地址为"https://api.deepseek.com/v1/chat/completions"
 DEEPSEEK_API_KEY = ""
@@ -36,17 +33,15 @@ else:
     proxies = None
 
 # [step 3]>> 模型选择是 (注意: LLM_MODEL是默认选中的模型, 它*必须*被包含在AVAIL_LLM_MODELS列表中 )
-LLM_MODEL = "gpt-4o-mini" # 可选 ↓↓↓
-AVAIL_LLM_MODELS = ["qwen-max", "o1-mini", "o1-mini-2024-09-12", "o1", "o1-2024-12-17", "o1-preview", "o1-preview-2024-09-12",
-                    "gpt-4-1106-preview", "gpt-4-turbo-preview", "gpt-4-vision-preview",
-                    "gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4-turbo-2024-04-09",
-                    "gpt-3.5-turbo-1106", "gpt-3.5-turbo-16k", "gpt-3.5-turbo", "azure-gpt-3.5",
+LLM_MODEL = "gpt-5-mini" # 可选 ↓↓↓
+AVAIL_LLM_MODELS = ["o1-mini","o1", "o3-mini", "o3"
+                    "gpt-4o", "gpt-4o-mini", "gpt-4.1", "gpt-4.1-mini", "gpt-5", "gpt-5-chat", "gpt-5-mini",
                     "gpt-4", "gpt-4-32k", "azure-gpt-4", "glm-4", "glm-4v", "glm-3-turbo",
-                    "gemini-1.5-pro", "chatglm3", "chatglm4",
-                    "deepseek-chat", "deepseek-coder", "deepseek-reasoner",
-                    "volcengine-deepseek-r1-250120", "volcengine-deepseek-v3-241226",
-                    "dashscope-deepseek-r1", "dashscope-deepseek-v3",
-                    "dashscope-qwen3-14b", "dashscope-qwen3-235b-a22b", "dashscope-qwen3-32b",
+                    "aioagi-claude-sonnet-4", "aioagi-claude-opus-4", "aioagi-claude-3-7-sonnet", "aioagi-claude-3-5-sonnet", "aioagi-claude-3-5-haiku","aioagi-claude-sonnet-4-5",
+                    "aioagi-deepseek-v3", "aioagi-deepseek-r1", "aioagi-deepseek-chat",
+                    "aioagi-gemini-2.5-pro", "aioagi-gemini-2.0-pro-exp", "aioagi-gemini-2.0-flash", "aioagi-gemini-1.5-pro-latest", "aioagi-gemini-1.5-flash-latest",
+                    "aioagi-qwen-max", "aioagi-qwen-turbo", "aioagi-qwen3-32b", "aioagi-qwen-plus",
+                    "gpt-4o-image", "gpt-4o-image-vip", "aioagi-dall-e-3"
                     ]
 
 EMBEDDING_MODEL = "text-embedding-3-small"
@@ -69,8 +64,8 @@ EMBEDDING_MODEL = "text-embedding-3-small"
 # ]
 # --- --- --- ---
 # 此外，您还可以在接入one-api/vllm/ollama/Openroute时，
-# 使用"one-api-*","vllm-*","ollama-*","openrouter-*"前缀直接使用非标准方式接入的模型，例如
-# AVAIL_LLM_MODELS = ["one-api-claude-3-sonnet-20240229(max_token=100000)", "ollama-phi3(max_token=4096)","openrouter-openai/gpt-4o-mini","openrouter-openai/chatgpt-4o-latest"]
+# 使用"aioagi-*","vllm-*","ollama-*","openrouter-*"前缀直接使用非标准方式接入的模型，例如
+# AVAIL_LLM_MODELS = ["aioagi-claude-3-sonnet-20240229(max_token=100000)", "ollama-phi3(max_token=4096)","openrouter-openai/gpt-4o-mini","openrouter-openai/chatgpt-4o-latest"]
 # --- --- --- ---
 
 
@@ -142,7 +137,7 @@ TIMEOUT_SECONDS = 30
 
 
 # 网页的端口, -1代表随机端口
-WEB_PORT = 6002
+WEB_PORT = 7860
 
 
 # 是否自动打开浏览器页面
@@ -418,7 +413,7 @@ AUTO_CONTEXT_MAX_CLIP_RATIO = [0.80, 0.60, 0.45, 0.25, 0.20, 0.18, 0.16, 0.14, 0
 ├── "Gemini"
 │   └──  GEMINI_API_KEY
 │
-└── "one-api-...(max_token=...)" 用一种更方便的方式接入one-api多模型管理界面
+└── "aioagi-...(max_token=...)" 用一种更方便的方式接入one-api多模型管理界面
     ├── AVAIL_LLM_MODELS
     ├── API_KEY
     └── API_URL_REDIRECT

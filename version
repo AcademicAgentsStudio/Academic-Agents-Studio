@@ -1,5 +1,5 @@
 {
   "version": 1.0,
   "show_feature": true,
-  "new_feature": "支持deepseek-reason(r1) <-> 字体和字体大小自定义 <-> 优化前端并修复TTS的BUG <-> 添加时间线回溯功能 <-> 支持chatgpt-4o-latest <-> 增加RAG组件 <-> 升级多合一主提交键"
+  "new_feature": "基于AI智能体驱动的学术研究全流程智能化平台正式开源版V1.0，支持论文写作、文献分析、代码解释、多语言翻译等学术场景。"
 }

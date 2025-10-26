@@ -19,12 +19,14 @@ RUN apt-get install ffmpeg -y
 RUN apt-get clean
 
 # 进入工作路径（必要）
-WORKDIR /gpt
+WORKDIR /workspace
 
 # 安装大部分依赖，利用Docker缓存加速以后的构建 （以下两行，可以删除）
 COPY requirements.txt ./
+RUN mkdir docs
+COPY ./docs/gradio-3.32.15-py3-none-any.whl ./docs
 RUN uv venv --python=3.12 && uv pip install --verbose -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
-ENV PATH="/gpt/.venv/bin:$PATH"
+ENV PATH="/workspace/.venv/bin:$PATH"
 RUN python -c 'import loguru'
 
 # 装载项目文件，安装剩余依赖（必要）
