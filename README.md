@@ -127,9 +127,10 @@
 
 ## 🔄 学术智能体交互流程可视化
 
-### 透明化执行过程：Academic Agents Studio 提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
-
 <div align="center">
+   
+### 透明化学术智能体执行过程：
+Academic Agents Studio 平台提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
 
 https://github.com/user-attachments/assets/8d395b18-9ffa-46b9-a2a6-6d50bc460de2
 
