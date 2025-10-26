@@ -136,14 +136,31 @@
 ### 透明化学术智能体执行过程：
 Academic Agents Studio 提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
 
+
+https://github.com/user-attachments/assets/7a8ce3fb-a6a4-406c-a6ec-4a89eec68a40
+
+
+
 ### **用户输入解析**：
 意图识别、任务分解、MCP服务解析、工具匹配。
+
+
+https://github.com/user-attachments/assets/5272fce3-50db-4564-b56d-e8da558e6c2e
+
 
 ### **工具调用过程**：
 实时显示调用的工具和服务、展示工具执行状态和进度、完整的请求和响应信息。
 
+
+https://github.com/user-attachments/assets/a756784e-4ce8-4142-80d0-e3c59b2b3c08
+
+
 ### **结果处理和整合**：
 工具结果的智能整合、格式化和可视化处理、最终结果生成和展示
+
+
+https://github.com/user-attachments/assets/6f1a844f-ca9a-4420-9b7d-2e0d3c1a6791
+
 
 
 </div>
