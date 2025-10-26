@@ -129,32 +129,6 @@
 
 </div>
 
-## 🔄 学术智能体交互流程可视化
-
-<div align="center">
-   
-### 透明化学术智能体执行过程：
-Academic Agents Studio 平台提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
-
-https://github.com/user-attachments/assets/8d395b18-9ffa-46b9-a2a6-6d50bc460de2
-
-### **用户输入解析**：
-意图识别、任务分解、MCP服务解析、工具匹配。
-
-https://github.com/user-attachments/assets/d3bc9dfc-8da0-4b55-94f4-537dfbd1170d
-
-### **工具调用过程**：
-实时显示调用的工具和服务、展示工具执行状态和进度、完整的请求和响应信息。
-
-https://github.com/user-attachments/assets/3f1d043c-de91-4132-8515-b106dde77628
-
-### **结果处理和整合**：
-工具结果的智能整合、格式化和可视化处理、最终结果生成和展示
-
-https://github.com/user-attachments/assets/111ff56e-61f0-46fb-bcfd-eb5176fbe529
-
-</div>
-
 ## 🚀 快速开始
 
 ### 环境要求
@@ -185,13 +159,18 @@ python main.py
 
 ```bash
 # 拉取镜像
-docker pull aioagi/academic-agents-Studio:latest
+docker pull aioagitech/academic_agents_studio:latest
 
-# 运行容器
-docker run -d -p 7860:7860 \
-  -e API_KEY="your-api-key" \
-  aioagi/academic-agents-Studio:latest
+# 运行容器（快速开始）
+docker run -it -p 7860:7860 --name academic_agents_studio aioagitech/academic_agents_stuido:latest sh -c "cd /workspace && python main.py" /bin/bash
+
+# 这里的 sh -c "cd /workspace && python main.py" 可以删掉改为用户手动进入workspace文件夹执行python main.py文件
+
+# 运行容器（设置环境变量：可以设置多个config.py下的环境变量，这里仅以设置网络访问的端口号WEB_PORT和调用模型所需的API_KEY为例）
+docker run -it -p 16666:16666 --name academic_agents_studio -e WEB_PORT=16666 -e API_KEY="sk-8fK9m2pQ7xR4sT6yV3nW" aioagitech/academic_agents_studio:latest sh -c "cd /workspace && python main.py" /bin/bash
 ```
+
+本地访问 `http://localhost:7860` 即可使用。
 
 访问 `http://localhost:7860` 即可使用。
 
