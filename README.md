@@ -1,5 +1,5 @@
 <p align="right">
-   <strong>中文</strong> | <a href="./docs/README.en.md">English</a>
+   <strong>中文</strong> | <a href="README.en.md">English</a>
 </p>
 
 <div align="center">
@@ -134,14 +134,30 @@
 ### 透明化学术智能体执行过程：
 Academic Agents Studio 提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
 
+
+https://github.com/user-attachments/assets/312812e2-dc75-40b3-a067-37b587384ce3
+
+
 ### **用户输入解析**：
 意图识别、任务分解、MCP服务解析、工具匹配。
+
+
+https://github.com/user-attachments/assets/63224a4d-d895-4e4f-948e-5fdd77216745
+
 
 ### **工具调用过程**：
 实时显示调用的工具和服务、展示工具执行状态和进度、完整的请求和响应信息。
 
+
+https://github.com/user-attachments/assets/a6ec323e-cd70-4495-b17a-b25c80a0d0c3
+
+
 ### **结果处理和整合**：
 工具结果的智能整合、格式化和可视化处理、最终结果生成和展示
+
+
+https://github.com/user-attachments/assets/e0678519-e4b6-48d2-b021-2b3ddad8a91a
+
 
 
 </div>
