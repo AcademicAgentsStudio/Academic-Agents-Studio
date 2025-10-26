@@ -129,6 +129,25 @@
 
 </div>
 
+## 🔄 学术智能体交互流程可视化
+
+<div align="center">
+
+### 透明化学术智能体执行过程：
+Academic Agents Studio 提供完整的学术智能体交互流程可视化，让用户清晰了解智能体处理环节：
+
+### **用户输入解析**：
+意图识别、任务分解、MCP服务解析、工具匹配。
+
+### **工具调用过程**：
+实时显示调用的工具和服务、展示工具执行状态和进度、完整的请求和响应信息。
+
+### **结果处理和整合**：
+工具结果的智能整合、格式化和可视化处理、最终结果生成和展示
+
+
+</div>
+
 ## 🚀 快速开始
 
 ### 环境要求
@@ -162,7 +181,7 @@ python main.py
 docker pull aioagitech/academic_agents_studio:latest
 
 # 运行容器（快速开始）
-docker run -it -p 7860:7860 --name academic_agents_studio aioagitech/academic_agents_stuido:latest sh -c "cd /workspace && python main.py" /bin/bash
+docker run -it -p 7860:7860 --name academic_agents_studio aioagitech/academic_agents_studio:latest sh -c "cd /workspace && python main.py" /bin/bash
 
 # 这里的 sh -c "cd /workspace && python main.py" 可以删掉改为用户手动进入workspace文件夹执行python main.py文件
 
@@ -171,8 +190,6 @@ docker run -it -p 16666:16666 --name academic_agents_studio -e WEB_PORT=16666 -e
 ```
 
 本地访问 `http://localhost:7860` 即可使用。
-
-访问 `http://localhost:7860` 即可使用。
 
 我来帮您优化完善"学术智能体服务支持"小节，并将相关项目内容整合进去：
 
