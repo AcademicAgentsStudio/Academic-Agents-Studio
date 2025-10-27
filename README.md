@@ -205,7 +205,6 @@ docker run -it -p 16666:16666 --name academic_agents_studio -e WEB_PORT=16666 -e
 
 本地访问 `http://localhost:7860` 即可使用。
 
-我来帮您优化完善"学术智能体服务支持"小节，并将相关项目内容整合进去：
 
 ## 🤖 学术智能体MCP服务支持
 
